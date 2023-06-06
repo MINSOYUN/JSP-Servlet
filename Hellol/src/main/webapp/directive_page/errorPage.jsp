@@ -1,7 +1,9 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     isErrorPage = "true"
-    trimDirectiveWhitespaces ="true"
+	trimDirectiveWhitespaces ="true"
     %>
     <!-- isErrorPage: true 지정
     	 해당 페이지가 에러를 처리할지 여부를 지정 -->
