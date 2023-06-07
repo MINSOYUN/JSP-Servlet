@@ -203,14 +203,14 @@
 			       }
 				%>
 				
-                <!-- 로그인 성공: 로그인 박스 숨기고 'abc님 환영합니다' 출력 -->
-				<!-- 로그인: method를 post로 설정해서 아이디/ 비밀번호가 노출되는 것을 막아줍니다 -->
 				<%
 				String name = request.getParameter("name");
 				if(name != null && !name.equals("")){
 					out.print(name+"님 환영합니다");
 				} else{
 				%>
+                <!-- 로그인 성공: 로그인 박스 숨기고 'abc님 환영합니다' 출력 -->
+				<!-- 로그인: method를 post로 설정해서 아이디/ 비밀번호가 노출되는 것을 막아줍니다 -->
                 <form action ="LoginAction.jsp" method = "post">
                     <div class='loginbox'>
                         <div id='login'>

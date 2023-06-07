@@ -19,6 +19,6 @@
           response.sendRedirect("gogreen.jsp?loginErr=Y");
       }
                 
-        %>
+    %>
 </body>
 </html>
