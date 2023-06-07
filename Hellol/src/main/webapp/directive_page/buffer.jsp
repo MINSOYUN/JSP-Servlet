@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage ="errorPage.jsp"%>
-<%@ page buffer="10kb" autoFlush="true" %>
+<%@ page buffer="1kb" autoFlush="false" %>
     <!-- 버퍼의 용량을 초과하게 되면 오류 발생 -->
     <!-- 버퍼의 크기를 크게 지정하던가, autoFlush 속성을 true로 설정 하면 해결 -->
 <!DOCTYPE html>
