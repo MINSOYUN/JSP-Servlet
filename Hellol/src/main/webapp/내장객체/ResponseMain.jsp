@@ -8,16 +8,17 @@
     <form action="./ResponseLogin.jsp" method="post">
   	 	<!-- 유효성 검사(Validation Check): 사용자의 입력값이 유효한지 체크 -->
     	<!-- 해당 속성에 반드시 값이 입력되어야 한다 -->
-        아이디 : <input type="text" name="user_id" required = "required"/><br />
+    	<!-- 아이디값 틀려도 아이디가 기억되게 한다 -->
+        아이디 : <input type="text" name="user_id" required value = "<%= request.getParameter("user_id") %>"/><br />
         패스워드 : <input type="text" name="user_pwd" required = "required"/><br />
         <input type="submit" value="로그인" />
     </form>
+  
    <%
    	String loginErr = request.getParameter("loginErr");
    	if(loginErr != null){
 	   out.print ("로그인 실패");
   	 }
-   	
    %>
    
 

@@ -20,6 +20,11 @@
 			// 요청할 페이지 정보
 			response.sendRedirect("ResponseWelcom.jsp");
 		} else{
+			
+			// RequestDispatcher rd = request.getRequestDispatcher("ResponseMain");
+			// rd.forward(request, response);
+
+			
 			out.print("로그인 실패");
 			response.sendRedirect("ResponseMain.jsp?loginErr=1");   // 넘어갈 때 파라미터 주기
 		}
