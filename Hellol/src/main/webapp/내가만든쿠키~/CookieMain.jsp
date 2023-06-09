@@ -8,6 +8,7 @@
 </head>
 <body>
 <!-- coockie
+요청 시 요청 헤어데 쿠키정보를 포함하여 요청!
 클라이언트의 상태 정보를 클라이언트 PC에 저장합니다
 로그인 아이디를 저장하거나, 팝업창을 제어하는데 주로 사용 된다
 
@@ -29,6 +30,7 @@
  	값: 쿠키에 저장할 실제 데이터
  */
  	Cookie cookie = new Cookie("myCookie", "쿠키짱맛");
+ 	// Cookie cookie = new Cookie("myCookie", URLEncoder.encode("쿠키짱맛,"UTF-8")); -> 안하는게 좋음
  	// 쿠키가 적용될 경로를 지정(하위경로까지 사용 가능)
  	// request.getContextPath() : request 객체로부터 컨텍스트 루트 경로 조회
  	// 루트 경로로 지정하게 되면 웹 애플리케이션 전체에서 쿠키를 사용하겠다는 의미
@@ -36,8 +38,11 @@
  	
  	// 쿠키가 유지될 기간을 초단위로 지정(3600=1시간)
  	cookie.setMaxAge(3600);
- 	// 생성한 쿠키를 응답객체에 추기
+ 	// 생성한 쿠키를 응답객체에 추가
  	response.addCookie(cookie); // response 객체에 담아준다
  %>
+ 
+ <h3>2. 페이지 이동 후 쿠키 값 확인하기</h3>
+ <a href = "CookieResult.jsp">쿠키 값 확인하기</a>
 </body>
 </html>
