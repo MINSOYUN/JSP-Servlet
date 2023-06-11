@@ -29,6 +29,7 @@
 		response.addCookie(cookie);
 	}
 	
+	
 	if("abc".equals(id) && "123".equals(pw)){
 		out.print("로그인 성공");
 		response.sendRedirect("login.jsp?name="+id);

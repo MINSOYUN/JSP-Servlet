@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- coockie
+<!-- cookie
 요청 시 요청 헤어데 쿠키정보를 포함하여 요청!
 클라이언트의 상태 정보를 클라이언트 PC에 저장합니다
 로그인 아이디를 저장하거나, 팝업창을 제어하는데 주로 사용 된다
