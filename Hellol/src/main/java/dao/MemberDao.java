@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import common.ConnectionUtil;
+import dto.Board;
 import dto.Member;
 
 public class MemberDao {
+	
+	BoardDao dao = new BoardDao();
 
 	public MemberDao() {
 		// TODO Auto-generated constructor stub
@@ -26,8 +30,11 @@ public class MemberDao {
 		String sql = "select * from member where id= ? and pass = ?";
 
 		// 리소스 / 자원 자동 반환(close)
-		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement psmt = con.prepareStatement(sql);) {
-
+		try (Connection con = ConnectionUtil.getConnection();
+				PreparedStatement psmt = con.prepareStatement(sql);) {
+			psmt.setString(1, id);
+			psmt.setString(2, pw);
+			
 			ResultSet rs = psmt.executeQuery();
 			// id, pw 일치하는 회원이 있으면 조회
 			if (rs.next()) {
@@ -66,4 +73,5 @@ public class MemberDao {
 
 		return i;
 	}
+	
 }
