@@ -13,6 +13,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+		
 <%
 	// id, pw 값 가져오기 geParameter()
 	// form 요소의 값을 읽어오는 것이 get, set은 내가 저장하는 것
@@ -28,13 +29,13 @@
 		session.setAttribute("user_id", member.getId());
 		session.setAttribute("member", member);
 		
-		// response.sendRedirect("LoginForm.jsp");
-		response.sendRedirect("Board.jsp");
+	    // response.sendRedirect("LoginForm.jsp");
+		// response.sendRedirect("Board.jsp");
 	} else{
 		// 로그인 실패 -> loginFrom 페이지로 이동, 오류메세지 출력(로그인 실패 인식 하기 위해)
 		request.setAttribute("LoginErrMsg", "아이디, 비밀번호가 일치하지 않습니다");
 		// request 영역을 공유하기 위해 forward(getRequestDispatcher의 객체) 사용
-		request.getRequestDispatcher("LoginFrom.jsp").forward(request, response);
+		request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 	}
 
 %>

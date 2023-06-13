@@ -29,7 +29,7 @@
 <jsp:include page="Link.jsp"></jsp:include>
 
 <h3>목록보기(List)</h3>
-총건수: <%=totalCnt %>'
+총건수: <%=totalCnt %>
 
 
 <!-- 검색폼 -->

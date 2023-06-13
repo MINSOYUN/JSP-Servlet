@@ -19,13 +19,13 @@ public class DBConnPool {
 	public static Connection getConnection() {
 		Connection conn = null;
 		
-		// 커넥션 풀 생성
 		Context initContext;
 		try {
-			initContext = new InitialContext();
+            // 커넥션 풀 얻기
+			initContext = new InitialContext();    //  초기 컨텍스트를 얻는다
 			Context envContext  = (Context)initContext.lookup("java:/comp/env");
-			DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
-			// 커넥션 풀을 통해 연결 하기
+			DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");    // 컨테이너에서 제공하는 커넥션 풀
+			// 커넥션 풀을 통해 연결 얻기
 			conn = ds.getConnection();
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -33,9 +33,8 @@ public class DBConnPool {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return conn;
-	}
+}
 	
 	public static void close(Connection conn) {
 			try {

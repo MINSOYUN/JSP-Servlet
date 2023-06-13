@@ -11,11 +11,8 @@ import dto.Board;
 import dto.Member;
 
 public class MemberDao {
-	
-	BoardDao dao = new BoardDao();
 
 	public MemberDao() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

@@ -21,6 +21,6 @@
 	<jsp:forward page="ParamForward.jsp?param1=쿼리스트링">
 		<jsp:param value="param2" name="param2"/> 
 		<jsp:param value="<%= pValue %>" name="param3"/>
-	</jsp:forward>
+	</jsp:forward> 
 </body>
 </html>
