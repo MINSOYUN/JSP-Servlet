@@ -30,7 +30,7 @@
 		session.setAttribute("member", member);
 		
 	    // response.sendRedirect("LoginForm.jsp");
-		// response.sendRedirect("Board.jsp");
+		 response.sendRedirect("Board.jsp");
 	} else{
 		// 로그인 실패 -> loginFrom 페이지로 이동, 오류메세지 출력(로그인 실패 인식 하기 위해)
 		request.setAttribute("LoginErrMsg", "아이디, 비밀번호가 일치하지 않습니다");

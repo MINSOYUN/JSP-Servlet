@@ -10,19 +10,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% 
-	BoardDao dao = new BoardDao();
-    List<Board> boardList = dao.getList();
-    
-    // 총 게시물 수
-    int totalCnt = dao.getToatlCnt();
-    
+<%     
     String searchFiled = request.getParameter("searchFiled");
     String searchWord = request.getParameter("searchWord");
     
+    // 검색어가 null인 경우 공백 출력
+    searchWord = searchWord == null ? "": searchWord;
+    /*if(searchWord == null){
+    	searchWord = "";
+    } */
+    
     // 검색어가 null이 아니면 검색 기능을 추가
-    out.print(searchFiled);
-    out.print(searchWord);
+    out.print("검색어: " + searchFiled+"<br>");
+	out.print("검색필드: " + searchWord);
+
+    BoardDao dao = new BoardDao();
+   	// 밑에가야하는이유 ????
+    List<Board> boardList = dao.getList(searchFiled, searchWord); 
+    
+    // 총 게시물 수 
+    int totalCnt = dao.getToatlCnt(searchFiled, searchWord);
 %>
 
 
@@ -31,9 +38,8 @@
 <h3>목록보기(List)</h3>
 총건수: <%=totalCnt %>
 
-
 <!-- 검색폼 -->
-<form>
+<form> 
 	<table border=1 width="90%">
 		<tr align="center">
 		  <td>
@@ -49,8 +55,7 @@
 </form>
 <!-- 검색폼 끝 -->
 
-
-<table border="1">
+<table border="1" width="90%">
 	<tr>
 		<th>번호</th> 
 		<th>제목</th>
@@ -60,7 +65,7 @@
 		<th>조회수</th>
 	</tr>
 	<%
-	if(boardList.isEmpty()){
+	if(boardList.isEmpty()){   //  컬렉션 또는 문자열이 비어 있는지 확인하는 메서드
 		// 게시글이 하나도 없을 때
 	%>
 	<tr>
@@ -71,7 +76,7 @@
 	%>
 	<tr>
 		<td><%=board.getNum() %></td>
-		<td><%=board.getTitle() %></td>
+		<td><a href="View.jsp?num=<%=board.getNum()%>"><%=board.getTitle() %></a></td>
 		<td><%=board.getContent()%></td>
 		<td><%=board.getId()%> </td>
 		<td><%=board.getPostdate() %></td>
@@ -84,13 +89,17 @@
 </table>
 
 
+<%
+   if(session.getAttribute("user_id") != null){
+%>
 <table border=1 width="90%">
     <tr>
-		<td  align="center">
-		  	<input type="text" value="글쓰기">
-		 </td>
+		<td align="right">
+		  	<input type="button" value="글쓰기" onclick="location.href='Write.jsp'">
+		</td>
 	</tr>
 </table>
+<% } %>
 		  
   
 </body>
