@@ -134,7 +134,7 @@ public class BoardDao {
 			pstmt.setString(1, num);
 			ResultSet rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				board = new Board();
 				board.setNum(rs.getString("num"));
 				board.setTitle(rs.getString("title"));
