@@ -32,8 +32,8 @@ public class MemberDao {
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
 			
-			ResultSet rs = psmt.executeQuery();
 			// id, pw 일치하는 회원이 있으면 조회
+			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				String loginId = rs.getString("id");
 				String name = rs.getString("name");
@@ -57,7 +57,8 @@ public class MemberDao {
 	public int insert(Member member) {
 		int i = 0;
 		String sql = "insert into member values(?, ?, ?, sysdate)";
-		try (Connection conn = ConnectionUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+		try (Connection conn = ConnectionUtil.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPass());
 			pstmt.setString(3, member.getName());

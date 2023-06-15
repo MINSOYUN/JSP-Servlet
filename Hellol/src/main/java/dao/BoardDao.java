@@ -101,8 +101,8 @@ public class BoardDao {
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
 			
-				// insert, update, delete 실행 후 몇건이 처리되었는지 반환
-				// request 도 아닌 " 도 아닌 baord.getTitle인 이유
+			// insert, update, delete 실행 후 몇건이 처리되었는지 반환
+			// request 도 아닌 " 도 아닌 baord.getTitle인 이유
 			 	pstmt.setString(1, board.getTitle());
 			 	pstmt.setString(2, board.getContent());
 			 	pstmt.setString(3, board.getId());

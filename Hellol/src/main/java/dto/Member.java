@@ -7,7 +7,6 @@ public class Member {
 	private String regidate;
 
 	public Member() {
-		// TODO Auto-generated constructor stub
 		
 	}
 
