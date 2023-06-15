@@ -102,6 +102,7 @@ public class BoardDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
 			
 				// insert, update, delete 실행 후 몇건이 처리되었는지 반환
+				// request 도 아닌 " 도 아닌 baord.getTitle인 이유
 			 	pstmt.setString(1, board.getTitle());
 			 	pstmt.setString(2, board.getContent());
 			 	pstmt.setString(3, board.getId());
@@ -167,6 +168,54 @@ public class BoardDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("게시글 불러오는 도중 조회수 에러가 발생하였습니다");
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * 게시글을 수정합니다
+	 * @param board
+	 * @return
+	 */
+	public int update(Board board) {
+		int res = 0;
+		String sql ="update board set title= ? , content =? where num=? ";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setString(3, board.getNum());
+			
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("게시글 수정 도중 오류가 발생하였습니다");
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * 게시글을 삭제합니다
+	 * @param num
+	 * @return
+	 */
+	public int delete(String num) {
+		int res = 0;
+		String sql = "delete from board where num=? ";
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, num);
+			
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return res;
 	}

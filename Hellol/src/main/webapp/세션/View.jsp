@@ -31,12 +31,15 @@
 	function deletePost(){
 		 var res = confirm("삭제 하시겠습니까?");
 		 if(res){
+			 // board.getNum() 사용하기 위해서는 위에서 Board 생성자 생성해야한다
 			 location.href="DeleteProcess.jsp?num=<%= board.getNum()%>";
 		 }
 	}
 </script>
 </head>
 <body>
+<jsp:include page="Link.jsp" />
+
 <h3>회원제 게시판 - 상세 보기(View)</h3>
 <form>
 	<table border="1" width="90%">
@@ -66,8 +69,8 @@
 				<%
 				// 로그인한 아이디와 글쓴이가 같으면 수정, 삭제 버튼 활성화
 				if(session.getAttribute("user_id") != null && board.getId().equals(session.getAttribute("user_id"))){ %>
-				<button type="button" onclick="location.href='Edit.jsp?num<%= board.getNum()%>'">수정하기</button>
-				<button type="button" onclick="">삭제하기</button>
+				<button type="button" onclick="location.href='Edit.jsp?num=<%= board.getNum()%>'">수정하기</button>
+				<button type="button" onclick="deletePost()">삭제하기</button>
 				<% } %>
 			</td>
 		</tr>

@@ -34,6 +34,7 @@
 	if(res>0){
 		// 등록 성공
 		JSFunction.alertLocation("게시글이 등록 되었습니다", "Board.jsp", out);
+		
 %>
 	<!-- <script>
 		alert("게시글이 등록 되었습니다");
@@ -41,7 +42,7 @@
 	</script>  -->
 
 <%
-		response.sendRedirect("Board.jsp");
+		// response.sendRedirect("Board.jsp");
 	} else{
 		// 등록 실패
 		JSFunction.alertBack("게시글 등록 중 오류가 발생하였습니다", out);

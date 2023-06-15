@@ -23,8 +23,8 @@ public class JSFunction {
 			// "" 쌍따옴표 안에 JS 코드 작성
 			String script = "" 
 					+ "<script>"
-					+ "alert("+msg+");"
-					+ "location.hrf='"+url+"';"
+					+ "alert('"+msg+"');"
+					+ "location.href='"+url+"';"
 					+ "</script>";
 			// 화면에 출력
 			// 자바스크립트 코드를 out 내장 객체로 출력
