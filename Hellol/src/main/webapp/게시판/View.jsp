@@ -1,3 +1,4 @@
+<%@page import="dao.Criteria"%>
 <%@page import="dao.NewBoardDao"%>
 <%@page import="common.JSFunction"%>
 <%@page import="dto.Board"%>
@@ -65,12 +66,19 @@ function deletePost(){
             <td colspan="4" align="center">
             
             <%
-            if(session.getAttribute("user_id") != null && board.getId().equals("user_id")){
+            if(session.getAttribute("user_id") != null && board.getId().equals(session.getAttribute("user_id"))){
             %>
                 <button type="button" onclick="location.href='Edit.jsp?num=<%=board.getNum()%>'">수정하기</button>
                 <button type="button" onclick="deletePost()">삭제하기</button> 
-                <% } %>
-                <button type="button" onclick="location.href='Link.jsp'">목록 보기</button>
+                <% }
+            	
+            	// 주소표시줄의 형태는 문자열 형태이므로 String으로!
+                String pageNo = "1";
+                if(request.getParameter("pageNo") != null){
+                	pageNo = request.getParameter("pageNo");
+                }
+                %>
+                <button type="button" onclick="location.href='List.jsp?pageNo=<%=pageNo%>'">목록 보기</button>
             </td>
         </tr>
     </table>

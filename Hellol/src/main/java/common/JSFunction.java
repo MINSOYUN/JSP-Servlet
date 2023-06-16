@@ -29,6 +29,7 @@ public class JSFunction {
 			// 화면에 출력
 			// 자바스크립트 코드를 out 내장 객체로 출력
 			out.print(script);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,6 +51,7 @@ public class JSFunction {
 					+ "history.go(-1);"
 					+  "</script>";
 			out.print(script);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

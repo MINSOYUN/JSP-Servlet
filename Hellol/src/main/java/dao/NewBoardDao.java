@@ -163,17 +163,21 @@ public class NewBoardDao {
 	 * 게시글의 총 갯수를 반환합니다
 	 * @return
 	 */
-	public int getTotalCnt(String searchFiled, String searchWord) {
+	public int getTotalCnt(Criteria criteria) {
 		int totalCnt = 0;
 		String sql = "select count(*) from board ";
-		if(searchWord != null && "".equals(searchWord)) {
-			sql += "where " + searchFiled+ " like '%" + searchWord + " '%";
+		
+		if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
+			sql += "where " + criteria.getSearchField()+ " like '%" + criteria.getSearchWord() + "%'";
 		}
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
 			ResultSet rs = pstmt.executeQuery();
+			
+			rs.next();
 			totalCnt = rs.getInt(1);
+			rs.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

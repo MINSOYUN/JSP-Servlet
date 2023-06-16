@@ -62,16 +62,65 @@ public class BoardDao {
 		return boardList;
 	}
 	
+	
+	
+	public List<Board> getListPage(Criteria criteria) {
+		Board board = null;
+		List<Board> boardList = new ArrayList<Board>();
+		String sql = "select * from( "
+				+ " select t.*,  rownum rn "
+			    + " from( "
+			    + " select * "
+			    + " from board ";
+		// 검색어가 입력된 경우 검색 조건을 추가합니다
+		if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
+			sql += " where "+ criteria.getSearchField()+ " like '%"+criteria.getSearchWord() +"%' ";
+		}
+		sql += " order by num desc "
+				+ "     ) t "
+				+ " ) "
+				+ " where rn between "+ criteria.getStartNo() + " and "+criteria.getEndNo();
+		System.out.println(sql);
+			
+		try (Connection conn =  DBConnPool.getConnection();
+				Statement stmt = conn.createStatement();){
+			ResultSet rs =stmt.executeQuery(sql);
+			
+			// 게시글의 수만큼 보드 객체를 생성해서 boardlist에 추가
+			while(rs.next()) {
+				// 게시물의 한 행을 DTO에 저장
+				board = new Board();
+				
+				board.setNum(rs.getString("num"));
+				board.setTitle(rs.getString("title"));
+				board.setContent(rs.getString("content"));
+				board.setId(rs.getString("id"));
+				board.setPostdate(rs.getString("postdate"));
+				board.setVisitcount(rs.getString("visitcount"));
+				
+				boardList.add(board);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("게시물 조회 중 예외 발생");
+		}
+		return boardList;
+	}
+	
+	
+	
+	
 	/** 
 	 * 게시물의 총 갯수를 반환
 	 * @return totalCnt
 	 */
-	public int getToatlCnt(String searchFiled, String searchWord) {
+	public int getToatlCnt(Criteria criteria) {
 		int totalCnt = 0;
 		String sql= "select count(*) from board "; 
 		
-		if(searchWord != null && !"".equals(searchWord)) {
-			sql += "where " + searchFiled + " like '%" + searchWord + "%' ";
+		if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
+			sql += "where " + criteria.getSearchField() + " like '%" + criteria.getSearchWord() + "%' ";
 		}
 			
 		try (Connection conn = DBConnPool.getConnection();

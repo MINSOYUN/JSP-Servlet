@@ -1,3 +1,5 @@
+<%@page import="dto.PageDto"%>
+<%@page import="dao.Criteria"%>
 <%@page import="dto.Board"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.BoardDao"%>
@@ -7,12 +9,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판</title>
 </head>
 <body>
 <%     
     String searchFiled = request.getParameter("searchFiled");
     String searchWord = request.getParameter("searchWord");
+    // 요청한 페이지 번호가 없다면 기본 페이지인 1p 를 보여준다
+    int pageNo = request.getParameter("pageNo") == null ? 1 : Integer.parseInt(request.getParameter("pageNo"));
     
     // 검색어가 null인 경우 공백 출력
     searchWord = searchWord == null ? "": searchWord;
@@ -24,12 +28,18 @@
     out.print("검색어: " + searchFiled+"<br>");
 	out.print("검색필드: " + searchWord);
 
-    BoardDao dao = new BoardDao();
-   	// 밑에가야하는이유 ????
-    List<Board> boardList = dao.getList(searchFiled, searchWord); 
+   	// 검색 조건 객체로 생성
+    Criteria criteria = new Criteria(searchFiled, searchWord, pageNo);
+   	
+   	// 게시판 DB 작업 - DAO 생성
+   	BoardDao dao = new BoardDao();
+
+	// 리스트 조회
+    // List<Board> boardList = dao.getList(searchFiled, searchWord); 
+   	List<Board> boardList = dao.getListPage(criteria);
     
-    // 총 게시물 수 
-    int totalCnt = dao.getToatlCnt(searchFiled, searchWord);
+    // 총 건수 조회 
+    int totalCnt = dao.getToatlCnt(criteria);
 %>
 
 
@@ -39,7 +49,8 @@
 총건수: <%=totalCnt %>
 
 <!-- 검색폼 -->
-<form> 
+<form name='searchForm'> 
+<input type='text' name='pageNo' value='<%=criteria.getPageNo()%>'>
 	<table border=1 width="90%">
 		<tr align="center">
 		  <td>
@@ -47,7 +58,7 @@
 				<option value="title">제목</option> <!-- 넘어갈 때 value 값으로 넘어가기때문에 value 지정하기 -->
 				<option value="content">내용</option>
 			</select>
-				<input type="text" name="searchWord" value="<%= searchWord%>">
+				<input type="text" name="searchWord" value="<%= criteria.getSearchWord()%>">
 				<input type="submit" value="검색하기">
 		  </td>
 		</tr>
@@ -100,6 +111,22 @@
 	</tr>
 </table>
 <% } %>
+
+
+<!-- 페이지블럭 생성 -->
+<%
+	// totalCnt 상단에 정의해둠
+	// 파라미터 초기화 잘 되었는지 확인
+	PageDto pageDto = new PageDto(totalCnt, criteria);
+%>
+<table border=1 width="90%">
+    <tr>
+		<td align="center">
+		<!-- 인클루드 -->
+			<%@include file="PageNavi.jsp" %>
+		</td>
+	</tr>
+</table>
 		  
   
 </body>

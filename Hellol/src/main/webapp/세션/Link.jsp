@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<head>
+<style>
+	a:hover{
+		background-color: rgba(250, 189, 114, 0.74);
+	}
+</style>
+</head>
 <table border="1" width="90%"> 
     <tr>
         <td align="center">
         
         	<% if(session.getAttribute("user_id") == null){ %>
-            <a href="../세션/LoginForm.jsp">로그인</a>
+            <a class="login" href="../세션/LoginForm.jsp">로그인</a>
         	<% } else { %>
             <a href="../세션/Logout.jsp">로그아웃</a>
         	<% } %>
