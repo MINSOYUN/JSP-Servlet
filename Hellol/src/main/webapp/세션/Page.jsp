@@ -24,7 +24,7 @@
 	// ex) 페이지 번호(2) 받아와서 startNo(1), endNo(10) 설정
 	// pageNo을 받아온 변수 pageNo를 매개변수에 작성 -> int 타입
 	Criteria criteria = new Criteria(pageNo);
-	// total 300 -> 1p에 글 10개 총 30p = 1블럭에 10개 p 총 3개 블럭
+	// total 300 -> 1p에 글 10개 총 30p = 1블럭에 10개p 총 3개 블럭
 	int total = 300;
 	
 	// 페이지블럭 초기화
@@ -49,7 +49,7 @@
 	// 다음 버튼
 	// 페이지블럭의 끝번호와 진짜페이지 번호가 같다면(==) 다음 페이지가 없으므로 false
 	if(pageDto.isNext()){
-		// 현재 블럭의 마지막 페이지의 다음 페잊이 -> 다음 블럭으로 이동
+		// 현재 블럭의 마지막 페이지의 다음 페이지 -> 다음 블럭으로 이동
 		out.print("<input type='button' value='>' onclick = 'go("+(pageDto.getEndNo()+1)+")'>");
 		// 제일 끝으로
 		out.print("<input type='button' value='>>' onclick = 'go("+(pageDto.getRealEnd())+")''>");

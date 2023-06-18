@@ -60,6 +60,7 @@ public class NewBoardDao {
 	 * 페이징된 게시글 조회
 	 */
 	// 페이징된 게시판 sql 문장이 앞 뒤로 실행된다
+	// 검색어가 입력된 경우 검색 조건을 추가합니다
 	public List<Board> getListPage(Criteria criteria){
 		Board board = null;
 		List<Board> list = new ArrayList<>();
@@ -70,7 +71,6 @@ public class NewBoardDao {
 			    + " decode(trunc(sysdate), trunc(postdate), to_char(postdate, 'hh24:mi:ss'), to_char(postdate,'yyyy-mm-dd')) postdate, "
 			    +  " visitcount "
 			    +    " from board ";
-		// 검색어가 입력된 경우 검색 조건을 추가합니다
 		if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
 			sql += " where "+ criteria.getSearchField()+ " like '%"+criteria.getSearchWord() +"%' ";
 		}
@@ -78,7 +78,6 @@ public class NewBoardDao {
 				+ "     ) t "
 				+ " ) "
 				+ " where rn between "+ criteria.getStartNo() + " and "+criteria.getEndNo();
-		System.out.println(sql);
 
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt =  conn.prepareStatement(sql);){

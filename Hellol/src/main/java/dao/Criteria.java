@@ -46,6 +46,7 @@ public class Criteria {
 	}
 	
 	
+	
 	// pageNoStr 타입 String 일 때 int로 형변환 후 page>0 조건 걸기 
 	public Criteria(String searchField, String searchWord, String pageNoStr) {
 		if(searchWord != null) {
@@ -54,6 +55,7 @@ public class Criteria {
 		}
 		
 		if(pageNoStr != null) {
+			// 정수로 변환
 			pageNo = Integer.parseInt(pageNoStr);
 			
 			if(pageNo > 0 ) {
@@ -67,6 +69,7 @@ public class Criteria {
 		} 
 		
 	}
+	
 	
 	
 	public String getSearchField() {

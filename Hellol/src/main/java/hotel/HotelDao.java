@@ -18,11 +18,11 @@ public class HotelDao {
 		Hotel hotel = null;
 		List<Hotel> hotelList = new ArrayList<Hotel>();
 
-		String sql = "select * from hotel";
-		if(searchWord != null && "".equals(searchWord)) {
-			sql += "where" + searchFiled + "like '%" + searchWord + "%'";
+		String sql = "select * from hotel ";
+		if(searchWord != null && !"".equals(searchWord)) {
+			sql += " where " + searchFiled + " like '%" + searchWord + "%'";
 		}
-		sql += "order by num";
+		sql += " order by num desc";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();){
@@ -88,7 +88,7 @@ public class HotelDao {
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			// 왜 getParameter 가 아닌 hote.___ 인지 =========================
+			// 왜 getParameter 가 아닌 hotel.___ 인지 =========================
 			pstmt.setString(1, hotel.getName());
 			pstmt.setString(2, hotel.getStar());
 			pstmt.setString(3, hotel.getId());
@@ -106,10 +106,10 @@ public class HotelDao {
 	// 총 검색갯수
 	public int getTotalCnt(String searchFiled, String searchWord) {
 		int totalCnt = 0;
-		String sql = "select count(*) from hotel";
+		String sql = "select count(*) from hotel ";
 		
 		if(searchWord != null && "".equals(searchWord)) {
-			sql += "where" + searchFiled + "like '%" + searchWord + "%'";
+			sql += " where " + searchFiled + " like '%" + searchWord + "%'";
 		}
 		
 		try (Connection conn = DBConnPool.getConnection();
@@ -124,5 +124,41 @@ public class HotelDao {
 			System.out.println("호텔 수를 조회하던 중 예외가 발생하였습니다");
 		}
 		return totalCnt;
+	}
+	
+	public int delete(String num) {
+		int res = 0;
+		String sql = "delete from hotel where num= ?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, num);
+			res =pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("호텔 삭제 도중 오류가 발생하였습니다");
+		}
+		 return res;
+	}
+	
+	public int update(Hotel hotel){
+		int res = 0;
+		String sql ="update hotel set name =?, star=?, address=? where num=?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, hotel.getName());
+			pstmt.setString(2, hotel.getStar());
+			pstmt.setString(3, hotel.getAddress());
+			pstmt.setString(4, hotel.getNum());
+			
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("호텔 수정 도중 오류가 발생하였습니다");
+		}
+		return res;
 	}
 }

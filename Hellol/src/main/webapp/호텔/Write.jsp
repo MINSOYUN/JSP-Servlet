@@ -15,21 +15,21 @@
 	<table border="1" width="70%">
 		<tr>
 			<th>호텔 이름</th>
-			<td><input type="text" name="title" style="width:70%;"></td>
+			<td><input type="text" name="name" style="width:70%;"></td>
 		</tr>
 		<tr>
 			<th>호텔 성급</th>
 			<td>
-				<select name="searchFiled"> 
-					<option value="title">5성급</option> 
-					<option value="title">4성급</option> 
-					<option value="title">3성급</option> 
+				<select name="star"> 
+					<option value="5성급">5성급</option> 
+					<option value="4성급">4성급</option> 
+					<option value="3성급">3성급</option> 
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>호텔주소</th>
-			<td><textarea name = "content" style="width:70%; height:100px;"></textarea></td>
+			<td><textarea name = "address" style="width:70%; height:100px;"></textarea></td>
 		</tr>
 		<tr>
 			<td colspan="2"  align="center">

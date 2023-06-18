@@ -53,20 +53,20 @@
 		<th>내용</th>
 		<th>작성자</th>
 		<th>작성일</th>
-		<th>조회수</th>
+		<th>작성일</th>
 	</tr>
 	<%
 	// null 이 아니라 isEmpty !!!!
 	if(hotelList.isEmpty()){
 	%>
 	<tr>
-		<td colspan = 5 align ="center"></td>
+		<td colspan = "6" align ="center">등록된 게시글이 없습니다</td>
 	</tr>
 	<% } else{
 		for(Hotel hotel : hotelList){ %>
 	<tr>
 		<td><%=hotel.getNum() %></td>
-		<td><%=hotel.getName() %></td>	
+		<td><a href = "View.jsp?num=<%=hotel.getNum()%>"><%=hotel.getName() %></a></td>	
 		<td><%=hotel.getStar() %></td>	
 		<td><%=hotel.getId() %></td>	
 		<td><%=hotel.getAddress() %></td>	

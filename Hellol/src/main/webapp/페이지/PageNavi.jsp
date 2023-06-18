@@ -23,14 +23,14 @@
 
 	// totalCnt, pageNo 세팅 필요 !!!
 	int pageNo = request.getParameter("pageNo") == null ? 1 : Integer.parseInt(request.getParameter("pageNo"));
-	Criteria criteria = new Criteria(pageNo); // 기본 생성자 없음
+	Criteria criteria = new Criteria(pageNo); 
 	
 	PageDto pageDto = new PageDto(totalCnt, criteria);	
 	
 	
 	// 시작 페이지의 번호가 1보다 크면 true -> 이전버튼 생성
 	if(pageDto.isPrev()){
-		out.print("<a href='pageDto.jsp?pageNo="+(pageDto.getStartNo()-1)+"'");
+		out.print("<a href='pageDto.jsp?pageNo="+(pageDto.getStartNo()-1)+"'>");
 		out.print("<");
 		out.print(" </a>");
 	}
@@ -43,7 +43,7 @@
 	
 	// 마지막 페이지의 번호가 게시물의 끝 페이지 번호와 일치하지 않으면 true -> 다음버튼 생성
 	if(pageDto.isNext()){
-		out.print("<a href='pageDto.jsp?pageNo="+(pageDto.getEndNo()+1)+"'");
+		out.print("<a href='pageDto.jsp?pageNo="+(pageDto.getEndNo()+1)+"'>");
 		out.print(">");
 		out.print(" </a>");
 	}
