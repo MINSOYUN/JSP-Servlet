@@ -27,6 +27,5 @@
 	${cookie.ELCookie.value } <!-- nullPointerException -> why? response 가 null 위에 response 설정해주기-->
 
 <h3>메서드 호출하기</h3>
-	${"123-123".replace("-", "")}
 </body>
 </html>
