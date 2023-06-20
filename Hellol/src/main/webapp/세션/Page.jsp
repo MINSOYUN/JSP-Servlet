@@ -2,6 +2,7 @@
 <%@page import="dao.Criteria"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,19 @@
 	}
 </script>
 
+<c:if test="${pageDto.prev}" var="prev">
+	<a href='pageDto.jsp?pageNo=1'>맨앞</a>
+	<a href='pageDto.jsp?pageNo=${pageDto.startNo-1 }'>이전</a>
+</c:if>
+
+<c:forEach begin="${pageDto.startNo }" end="${pageDto.endNo }" step="1">
+	<a href='pageDto.jsp?pageNo=${pageDto.pageNo }'>${pageDto.pageNo }</a>
+</c:forEach>
+
+<c:if test="${pageDto.next}">
+	<a href='pageDto.jsp?pageNo=${pageDto.endNo+1 }'>다음</a>
+	<a href='pageDto.jsp?pageNo=${pageDto.realEnd }'>끝</a>
+</c:if>
 
 <%
 	// request.getParameter 는 String 타입을 반환하므로 int 타입으로 형변환
