@@ -76,6 +76,6 @@
 	 -->
 	 
 	 <h4>다운로드</h4>
-	 <a href="${pageContext.request.contextPath}/업로드/05_입력양식 작성하기.pdf" download="파일명">다운로드</a>
+	 <a href="${pageContext.request.contextPath}/업로드/예방접종 도우미 예방접종증명서.pdf" download="파일명">다운로드</a>
 </body>
 </html>
