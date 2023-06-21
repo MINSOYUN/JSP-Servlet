@@ -28,4 +28,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/main/webapp/업로드/05_입력양식 작성하기.pdf</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/Desktop/ppt/05_%EC%9E%85%EB%A0%A5%EC%96%91%EC%8B%9D%20%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0.pdf</locationURI>
+		</link>
+		<link>
+			<name>src/main/webapp/WEB-INF/lib/cos.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/Downloads/cos-22.05/lib/cos.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
