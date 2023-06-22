@@ -8,9 +8,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>MVC 모델 2 게시판</h3>
+<h3>MVC 모델 2 게시판</h3>
 	
-	<table>
+	<!-- 검색폼 --> 
+<form method="get" name="searchForm">  
+<table border="1" width="90%">
+    <tr>
+        <td align="center">
+            <select name="searchField"> 
+                <option value="title">제목</option> 
+                <option value="content">내용</option>
+            </select>
+            <input type="text" name="searchWord""/>
+            <input type="submit" value="검색하기" />
+        </td>
+    </tr>   
+</table>
+</form>
+	
+	
+<table border="1" style="border-collapse:collapse">
 	<tr>
 		<th>번호</th>
 		<th>이름</th>
@@ -23,8 +40,16 @@
 		<th>비밀번호</th>
 		<th>조회수</th>
 	</tr>
+	<c:choose>
+	<c:when test="${empty list }">
+		<tr>
+			<td colspan = "10">등록된 게시물이 없습니다</td>
+		</tr>
+	</c:when>
+	
+	<c:otherwise>
 	<c:forEach items="${list }" var="row" varStatus="loop"> 
-	<tr>
+	<tr align ="center">
 		<td>${row.idx }</td>
 		<td>${row.name }</td>
 		<td>${row.title }</td>
@@ -38,7 +63,9 @@
 	</tr>
 	</c:forEach>
 	<a href="${pageContext.request.contextPath }/mvcboard/list.do">게시판 목록 바로가기</a>
-	
-	</table>
+	</c:otherwise>
+	</c:choose>
+</table>
+
 </body>
 </html>

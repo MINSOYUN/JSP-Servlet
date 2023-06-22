@@ -93,7 +93,7 @@
 		<url-pattern>/서블릿/HelloServlet.do</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 서블릿 등록2 -->
+	<!-- MemberAuth -->
 	<servlet>
 		<servlet-name>MemberAuth</servlet-name>
 		<servlet-class>servlet.MemberAuth</servlet-class>

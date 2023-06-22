@@ -44,10 +44,10 @@ public class MemberAuth extends HttpServlet{
 			req.setAttribute("authMessage", "로그인 실패");
 		}
 		
-		req.getRequestDispatcher("/서블릿/MemberAuth.jsp").forward(req, resp);
+		//req.getRequestDispatcher("/서블릿/MemberAuth.jsp").forward(req, resp);
 		
-//		String str = URLEncoder.encode("/서블릿/MemberAuth.jsp");
-//		resp.sendRedirect(str);
+		String str = URLEncoder.encode("/서블릿/MemberAuth.jsp");
+		resp.sendRedirect(str);
 	}
 	
 	
