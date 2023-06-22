@@ -12,15 +12,12 @@
 </head>
 <body>
 
-<%
-	FileDao dao = new FileDao();
-	List<FileDto> list = dao.getFileList(); 
-	out.print("총건수: " + list.size());
-%>
-<c:set var="fileList" value="<%=list %>"/>
+<c:set var="fileList" value=" ${requestScope.list }"/>
 
 <h4>DB에 등록된 파일 목록 보기</h4>
 <a href = "FileUpload.jsp">파일 등록 하기</a>
+
+<c:set var="fileList" value="${requestScope.list }"/>
 
 <table border="1" width="95%" style="border-collapse: collapse;">
 

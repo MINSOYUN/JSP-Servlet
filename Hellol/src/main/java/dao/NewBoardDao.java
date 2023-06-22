@@ -1,5 +1,6 @@
 package dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,6 @@ import java.util.List;
 
 import common.DBConnPool;
 import dto.Board;
-import oracle.jdbc.proxy.annotation.Pre;
 
 public class NewBoardDao {
 
