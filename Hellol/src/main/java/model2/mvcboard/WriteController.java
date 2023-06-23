@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.JSFunction;
 
-@WebServlet("/mvcboard/write.do")
 public class WriteController extends HttpServlet{
 
 	@Override
