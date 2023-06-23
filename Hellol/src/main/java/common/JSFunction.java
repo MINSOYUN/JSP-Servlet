@@ -1,7 +1,9 @@
 package common;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspWriter;
 
 public class JSFunction {
@@ -57,4 +59,35 @@ public class JSFunction {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void alertBack(HttpServletResponse resp, String msg) {
+		resp.setContentType("text/html;charset=utf-8");
+		try {
+			String script = "<script>"+"alert('"+msg+"')"
+		+ "history.back()"
+		+ "</script>";
+			PrintWriter writer = resp.getWriter();
+			writer.print(script);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public static void alertLocation(HttpServletResponse resp, String url, String msg) {
+		resp.setContentType("text/html;charset=utf-8");
+		try {
+			String script = "<script>"+"alert('"+msg+"');"
+		+ "location.href='"+url+"'"
+		+ "</script>";
+		
+			PrintWriter writer = resp.getWriter();
+			writer.print(script);
+		
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

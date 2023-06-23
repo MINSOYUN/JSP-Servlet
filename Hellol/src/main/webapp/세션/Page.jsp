@@ -50,7 +50,7 @@
 	// pageDto() 를 사용해 현재 페이지가 1페이지보다 큰 경우에만 true -> '<' 버튼 보인다
 	if(pageDto.isPrev()){
 		// 제일 앞으로 go(1페이지)
-		out.print("<input type='button' value='<<' onclick = 'go(1)''>");
+		out.print("<input type='button' value='<<' onclick = 'go(1)'>");
 		// 현재 블럭 맨 앞페이지의 앞페이지로 이동하는 것 -> 전 페이지블럭으로 이동
 		out.print("<input type='button' value='<' onclick = 'go("+(pageDto.getStartNo()-1)+")'>");
 	}

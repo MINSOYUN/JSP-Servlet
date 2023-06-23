@@ -25,7 +25,6 @@
 	int pageNo = request.getParameter("pageNo") == null ? 1 : Integer.parseInt(request.getParameter("pageNo"));
 	// 사용자가 페이징 번호를 지정하지 않아 기본 페이지인 1p 출력
 	
-	searchWord = searchWord == null ? "": searchWord;
 	
 	// ======= 페이징처리 필요 요소 2
 	Criteria criteria = new Criteria(searchField, searchWord, pageNo);
@@ -59,7 +58,8 @@
                 <option value="title">제목</option> 
                 <option value="content">내용</option>
             </select>
-            <input type="text" name="searchWord" value="<%=criteria.getSearchWord()%>"/>
+            <!--  criteria.getSearchWord() -->
+            <input type="text" name="searchWord"/>
             <input type="submit" value="검색하기" />
         </td>
     </tr>   
@@ -79,41 +79,41 @@
             <th width="10%">조회수</th>
             <th width="15%">작성일</th>
         </tr>
-        <!-- 목록의 내용 --> 
-		<%if(list.isEmpty()){ %>
-			<tr>
-				<td colspan="5">등록된 게시글이 없습니다</td>
-			</tr>
-		<% } else {
-		for(Board board : list){
-		%>
-        <tr align="center">
-            <td><%=board.getNum() %></td>  <!--게시물 번호-->
-            <td align="left"><a id = "title" href = "View.jsp?num=<%=board.getNum()%>&pageNo=<%=criteria.getPageNo()%>"><%=board.getTitle() %>
-            </td>
-            <td align="center"><%=board.getTitle() %></td>
-            <td align="center"><%=board.getId() %></td>          <!--작성자 아이디-->
-            <td align="center"><%=board.getVisitcount() %></td>  <!--조회수-->
-            <td align="center"><%=board.getPostdate() %></td>    <!--작성일-->
-        </tr>
-        <% 
-			}
-		} %>
-
+    	<c:set var="list" value="<%=list %>"/>  
+        
+       <c:if test="${empty list }" var="res">
+       	<tr>
+			<td colspan="5" align="center">게시물이 없습니다.</td>
+		</tr>
+       </c:if>
+       
+       <c:if test="${not res }">
+	       <c:forEach items="${list }" var="board">
+		       <tr align="center">
+		            <td>${board.num}</td>  <!--게시물 번호-->
+		            <td align="left">  <!--제목(+ 하이퍼링크)-->
+		                <a href="View.jsp?num=${board.num}&pageNo=<%=criteria.getPageNo()%>">${board.title}</a> 
+		            </td>
+		            <td align="center">${board.id}</td>          <!--작성자 아이디-->
+		            <td align="center">${board.visitcount}</td>  <!--조회수-->
+		            <td align="center">${board.postdate}</td>    <!--작성일-->
+		        </tr>
+	       </c:forEach>
+       </c:if>
+	
     </table>
     
     
     
     <!--목록 하단의 [글쓰기] 버튼-->
-    <%
-    if(session.getAttribute("user_id") != null && !"".equals("user_id")){
-    %>
-    <table border="1" width="90%">
-        <tr align="right">
-            <td><button type="button" onclick="location.href='Write.jsp'">글쓰기</button></td>
-        </tr>
-    </table>
-    <% } %>
+    <c:if test="${not empty sessionScope.UserId }">
+	    <table border="1" width="90%">
+	        <tr align="right">
+	            <td><button type="button" 
+	            		onclick="location.href='Write.jsp'">글쓰기</button></td>
+	        </tr>
+	    </table>
+    </c:if> 
     
 <!-- 
 페이징 블럭 생성 시작
@@ -126,7 +126,7 @@
     <tr>
 		<td align="center">
 		<!-- ======= 페이징처리 필요 요소 4 -->
-			<%@include file="../세션/PageNavi.jsp" %>
+		<%@include file ="../세션/PageNavi.jsp"%>
 		</td>
 	</tr>
 </table> 

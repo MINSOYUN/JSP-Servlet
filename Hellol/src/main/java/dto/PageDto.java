@@ -35,7 +35,7 @@ public class PageDto {
 		// 11페이지 끝번호 요청: 올림(11/10.0) * 10 = 20
 		// (형변환 int) 올림(페이지번호/한 페이지당 게시물 수) * 한 페이지당 게시물 수;
 		endNo = (int)Math.ceil(criteria.getPageNo() / 10.0) * 10;
-		System.out.println("pageNo" + criteria.getPageNo());
+		System.out.println("pageNo : " + criteria.getPageNo());
 		// endNo - (amount - 1);
 		startNo = endNo - (10-1);
 		

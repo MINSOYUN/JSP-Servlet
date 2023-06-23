@@ -109,7 +109,7 @@
 	</servlet-mapping>
 	
 	
-	<!-- 게시판 목록 조회 -->
+	<!-- 게시판 목록 조회 (ListController 와 list 연결)-->
 	<servlet>
 		<servlet-name>MVCBoardList</servlet-name>
 		<servlet-class>model2.mvcboard.ListController</servlet-class>
@@ -118,6 +118,18 @@
 	<servlet-mapping>
 		<servlet-name>MVCBoardList</servlet-name>
 		<url-pattern>/mvcboard/list.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- 글쓰기 조회 (WriteController 와 write 연결) -->
+	<servlet>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<servlet-class>model2.mvcboard.WriteController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<url-pattern>/mvcboard/write.do</url-pattern>
 	</servlet-mapping>
 
 

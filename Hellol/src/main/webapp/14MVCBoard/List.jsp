@@ -8,64 +8,76 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>MVC 모델 2 게시판</h3>
+
+
+	<h3>MVC 모델 2 게시판</h3>
+	<a href="${pageContext.request.contextPath }/mvcboard/list.do">게시판
+		목록 바로가기</a>
+	<br> 총 게시물수 : ${ totalCnt } 개
 	
-	<!-- 검색폼 --> 
-<form method="get" name="searchForm">  
-<table border="1" width="90%">
-    <tr>
-        <td align="center">
-            <select name="searchField"> 
-                <option value="title">제목</option> 
-                <option value="content">내용</option>
-            </select>
-            <input type="text" name="searchWord""/>
-            <input type="submit" value="검색하기" />
-        </td>
-    </tr>   
-</table>
-</form>
-	
-	
-<table border="1" style="border-collapse:collapse">
-	<tr>
-		<th>번호</th>
-		<th>이름</th>
-		<th>제목</th>
-		<th>내용</th>
-		<th>등록일</th>
-		<th>원본 파일명</th>
-		<th>저장된 파일명</th>
-		<th>다운로드횟수</th>
-		<th>비밀번호</th>
-		<th>조회수</th>
-	</tr>
-	<c:choose>
-	<c:when test="${empty list }">
+	<!-- 검색폼 -->
+	<form method="get" name="searchForm">
+		<table border="1" width="90%">
+		
+		<input type="hidden" name="pageNo" value="${param.pageNo }">
+			<tr>
+				<td align="center">${param.searchField eq "name" } <select
+					name="searchField">
+						<option value="title">제목</option>
+						<!-- selected 하나만 작성해도 선택되므로 삼항 연산자 통해서 받아온 param의 값이 value와 같다면 selected -->
+						<option value="name"
+							${param.searchField eq "name" ? "selected" : ""}>작성자</option>
+				</select> <input type="text" name="searchWord" value="${param.searchWord }" />
+					<input type="submit" value="검색하기" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+
+	<table border="1" style="border-collapse: collapse" width="90%">
 		<tr>
-			<td colspan = "10">등록된 게시물이 없습니다</td>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>조회수</th>
+			<th>작성일</th>
+			<th>첨부</th>
 		</tr>
-	</c:when>
-	
-	<c:otherwise>
-	<c:forEach items="${list }" var="row" varStatus="loop"> 
-	<tr align ="center">
-		<td>${row.idx }</td>
-		<td>${row.name }</td>
-		<td>${row.title }</td>
-		<td>${row.content }</td>
-		<td>${row.postdate }</td>
-		<td>${row.ofile }</td>
-		<td>${row.sfile }</td>
-		<td>${row.downcount }</td>
-		<td>${row.pass }</td>
-		<td>${row.visitcount }</td>
-	</tr>
-	</c:forEach>
-	<a href="${pageContext.request.contextPath }/mvcboard/list.do">게시판 목록 바로가기</a>
-	</c:otherwise>
-	</c:choose>
-</table>
+		<c:choose>
+			<c:when test="${empty list }">
+				<tr>
+					<td colspan="6">등록된 게시물이 없습니다</td>
+				</tr>
+			</c:when>
+
+			<c:otherwise>
+				<c:forEach items="${list }" var="row" varStatus="loop">
+					<tr align="center">
+						<td>${row.idx }</td>
+						<td><a href="../mvcboard/view.do?idx=${row.idx}"> ${row.title }</a></td>
+						<td>${row.name }</td>
+						<td>${row.visitcount }</td>
+						<td>${row.postdate }</td>
+						<td>첨부파일</td>
+					</tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</table>
+
+
+	<!-- 글쓰기 버튼 추가
+	글쓰기 버튼 클릭 시 글쓰기 페이지로 이동 -> 글쓰기 버튼 클릭 시 페이지로 이동-->
+	<table border="1" width="90%" style="border-collapse: collapse">
+		<tr style="border-style: none">
+			<td align="center">
+				<%@  include file="../세션/PageNavi.jsp" %>
+			</td>
+			<td align="right"><button type="button" onclick="location.href='/mvcboard/write.do'">글쓰기</button></td>
+		</tr>
+	</table>
+
 
 </body>
 </html>
