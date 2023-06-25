@@ -186,20 +186,15 @@ public class MVCBoardDAO {
 	 */
 	public int insert(MVCBoardDTO board) {
 		int res = 0;
-		String sql ="insert mvcboard values(?, ?, ?, ?, sysdate, ?, ?, ?, ?, ?)";
+		String sql ="insert into mvcboard (idx, name, title, content, ofile, pass) values (seq_board_num.nextval, ?, ?, ?, ?, ?)";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			pstmt.setString(1, board.getIdx());
-			pstmt.setString(2, board.getName());
-			pstmt.setString(3, board.getTitle());
-			pstmt.setString(4, board.getContent());
-			pstmt.setString(5, board.getPostdate());
-			pstmt.setString(6, board.getOfile());
-			pstmt.setString(7, board.getSfile());
-			pstmt.setInt(8, board.getDowncount());
-			pstmt.setString(9, board.getPass());
-			pstmt.setInt(10, board.getVisitcount());
+			pstmt.setString(1, board.getName());
+			pstmt.setString(2, board.getTitle());
+			pstmt.setString(3, board.getContent());
+			pstmt.setString(4, board.getOfile());
+			pstmt.setString(5, board.getPass());
 			
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -240,19 +235,22 @@ public class MVCBoardDAO {
 	 * @param board
 	 * @return
 	 */
-	public int update(MVCBoardDTO board) {
+	public int update(MVCBoardDTO dto) {
 		int res = 0;
-		String sql = "update mvcboard set name = ? ,title =?, content=?, sfile=? where idx =?";
+		String sql = "update mvcboard set name = ?, title =?, content=?, ofile=?, sfile=? where idx =? and pass=?";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			pstmt.setString(1, board.getName());
-			pstmt.setString(2, board.getTitle());
-			pstmt.setString(3, board.getContent());
-			pstmt.setString(4, board.getSfile());
-			pstmt.setString(5, board.getIdx());
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getTitle());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getOfile());
+			pstmt.setString(5, dto.getSfile());
+			pstmt.setString(6, dto.getIdx());
+			pstmt.setString(7, dto.getPass());
 			
 			res = pstmt.executeUpdate();
+			System.out.println("res: "+ res);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -281,7 +279,26 @@ public class MVCBoardDAO {
 		return res;
 	}
 	
-	// 게시글 삭제
+
 	
-	// 조회수 증가
+	/**
+	 * 조회수 1 상승
+	 * @param num
+	 * @return
+	 */
+	public int updateVisitCount(String idx) {
+		int res = 0;
+		String sql = "update mvcboard set visitcount = visitcount+1 where idx= ?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, idx);
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("조회수 오류가 발생했습니다");
+		}
+		return res;
+	}
 }

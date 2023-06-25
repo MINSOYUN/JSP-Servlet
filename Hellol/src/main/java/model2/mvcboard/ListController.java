@@ -30,6 +30,7 @@ public class ListController extends HttpServlet{
 		String searchWord = req.getParameter("searchWord");
 		String pageNo = req.getParameter("pageNo");
 		
+		// 초기화
 		Criteria cri = new Criteria(searchField, searchWord, pageNo);
 
 		System.out.println("==== 페이지 관련 파라미터 ====");
@@ -37,6 +38,7 @@ public class ListController extends HttpServlet{
 		System.out.println("endNo : " + cri.getEndNo());
 		System.out.println("pageNo : " + cri.getPageNo());
 		
+		// 내부상태 업데이트
 		cri.setSearchField(req.getParameter("searchField"));
 		cri.setSearchWord(req.getParameter("searchWord"));
 		

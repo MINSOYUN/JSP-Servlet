@@ -28,7 +28,7 @@ public class PassController  extends HttpServlet{
 	
 	
 	// form method 가 post이기 때문에 값을 받기 위해서 doPost()
-	@Override
+	@Override       
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String idx = req.getParameter("idx");
 		String mode = req.getParameter("mode");

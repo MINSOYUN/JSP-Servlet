@@ -20,9 +20,11 @@ public class ViewController  extends HttpServlet{
 		// 게시물 조회
 		MVCBoardDAO dao = new MVCBoardDAO();
 		
-		// String id = req.getParameter("idx")
+		String idx = req.getParameter("idx");
 		// dao.selectOne(idx)
-		MVCBoardDTO dto = dao.selectOne(req.getParameter("idx"));
+		MVCBoardDTO dto = dao.selectOne(idx);
+		
+		dao.updateVisitCount(idx);
 
 		// 조회된 게시물 저장
 		req.setAttribute("dto", dto);

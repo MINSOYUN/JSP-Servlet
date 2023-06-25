@@ -13,15 +13,15 @@
 
 
 <%
-NewBoardDao dao = new NewBoardDao();
-Board board = dao.selectOne(request.getParameter("num"));
-dao.updateVisitCount(request.getParameter("num"));
-
-
-if(board == null){
-	JSFunction.alertBack("게시글이 존재하지 않습니다", out);
-	return;
-}
+	NewBoardDao dao = new NewBoardDao();
+	Board board = dao.selectOne(request.getParameter("num"));
+	dao.updateVisitCount(request.getParameter("num"));
+	
+	
+	if(board == null){
+		JSFunction.alertBack("게시글이 존재하지 않습니다", out);
+		return;
+	}
 %>
 
 

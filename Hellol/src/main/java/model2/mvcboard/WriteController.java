@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 import common.JSFunction;
 
@@ -14,12 +15,18 @@ public class WriteController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/14MVCBoard/Write.jsp").forward(req, resp);
+	}
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String name = req.getParameter("name");
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		String ofile = req.getParameter("ofile");
 		String pass = req.getParameter("pass");
-	
+		
 		MVCBoardDTO dto = new MVCBoardDTO();
 		dto.setName(name);
 		dto.setTitle(title);
@@ -39,7 +46,9 @@ public class WriteController extends HttpServlet{
 		}
 		
 		// 공유되는 영역이 없는 경우 redirect
-		req.getRequestDispatcher("/14MVCBoard/Write.jsp").forward(req, resp);
+		req.getRequestDispatcher("../mvcboard/list.do").forward(req, resp);
+
+	
 	}
 	
 	
