@@ -28,11 +28,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/webapp/WEB-INF/lib/cos.jar</name>
-			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/Downloads/cos-22.05/lib/cos.jar</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

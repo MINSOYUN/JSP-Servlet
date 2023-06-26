@@ -23,7 +23,7 @@
 
 <c:if test="${pageDto.prev}">
 	<input type='button' value='<<' onclick = 'go(1)'>
-	<input type='button' value='<' onclick = 'go(${pageDto.getStartNo()-1})'>
+	<input type='button' value='<' onclick='go(${pageDto.startNo-1})'>
 </c:if>
 
 <c:forEach begin="${pageDto.startNo }" end="${pageDto.endNo }" step="1" var="i">
@@ -31,8 +31,8 @@
 </c:forEach>
 
 <c:if test="${pageDto.next}">
-	<input type='button' value='>' onclick = 'go(${pageDto.getEndNo()+1})'>
-	<input type='button' value='>>' onclick = 'go(${pageDto.getRealEnd()})'>
+	<input type='button' value='>' onclick = 'go(${pageDto.endNo+1})'>
+	<input type='button' value='>>' onclick = 'go(${pageDto.realEnd})'>
 </c:if>
 
 </body>

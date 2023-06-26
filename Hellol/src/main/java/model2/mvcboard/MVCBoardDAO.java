@@ -186,7 +186,7 @@ public class MVCBoardDAO {
 	 */
 	public int insert(MVCBoardDTO board) {
 		int res = 0;
-		String sql ="insert into mvcboard (idx, name, title, content, ofile, pass) values (seq_board_num.nextval, ?, ?, ?, ?, ?)";
+		String sql ="insert into mvcboard (idx, name, title, content, ofile, sfile, pass) values (seq_board_num.nextval, ?, ?, ?, ?, ?, ?)";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -194,7 +194,8 @@ public class MVCBoardDAO {
 			pstmt.setString(2, board.getTitle());
 			pstmt.setString(3, board.getContent());
 			pstmt.setString(4, board.getOfile());
-			pstmt.setString(5, board.getPass());
+			pstmt.setString(5, board.getSfile());
+			pstmt.setString(6, board.getPass());
 			
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -231,13 +232,13 @@ public class MVCBoardDAO {
 
 	
 	/**
-	 * 수정
+	 * 게시글 수정
 	 * @param board
 	 * @return
 	 */
 	public int update(MVCBoardDTO dto) {
 		int res = 0;
-		String sql = "update mvcboard set name = ?, title =?, content=?, ofile=?, sfile=? where idx =? and pass=?";
+		String sql = "update mvcboard set name = ?, title =?, content=?, ofile=?, sfile=? where idx =?";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -247,7 +248,6 @@ public class MVCBoardDAO {
 			pstmt.setString(4, dto.getOfile());
 			pstmt.setString(5, dto.getSfile());
 			pstmt.setString(6, dto.getIdx());
-			pstmt.setString(7, dto.getPass());
 			
 			res = pstmt.executeUpdate();
 			System.out.println("res: "+ res);
@@ -257,7 +257,7 @@ public class MVCBoardDAO {
 		}
 		return res;
 	}
-
+	
 	
 	/**
 	 * 삭제
@@ -298,6 +298,28 @@ public class MVCBoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("조회수 오류가 발생했습니다");
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * 다운로드수 1 상승
+	 * @param num
+	 * @return
+	 */
+	public int updateDownCount(String idx) {
+		int res = 0;
+		String sql = "update mvcboard set downcount = downcount+1 where idx= ?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, idx);
+			res = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("다운 오류가 발생했습니다");
 		}
 		return res;
 	}

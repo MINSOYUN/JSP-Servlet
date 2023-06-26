@@ -34,10 +34,10 @@ public class PageDto {
 		// ->  7을 10으로 나눈 결과인 0.7을 올림한 1에 10을 곱한 10이 되어 페이지 블록의 끝 번호가 10
 		// 11페이지 끝번호 요청: 올림(11/10.0) * 10 = 20
 		// (형변환 int) 올림(페이지번호/한 페이지당 게시물 수) * 한 페이지당 게시물 수;
-		endNo = (int)Math.ceil(criteria.getPageNo() / 10.0) * 10;
+		endNo = (int)Math.ceil(criteria.getPageNo() / 5.0) * 5;
 		System.out.println("pageNo : " + criteria.getPageNo());
 		// endNo - (amount - 1);
-		startNo = endNo - (10-1);
+		startNo = endNo - (5-1);
 		
 		// 진짜 끝 페이지 번호
 		// 총 행 / 한페이지당 개시물 수

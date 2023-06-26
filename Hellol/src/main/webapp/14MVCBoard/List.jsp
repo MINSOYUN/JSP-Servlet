@@ -37,12 +37,12 @@
 
 	<table border="1" style="border-collapse: collapse" width="90%">
 		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>조회수</th>
-			<th>작성일</th>
-			<th>첨부</th>
+			<th width="10%">번호</th>
+			<th width="*">제목</th>
+			<th width="15%">작성자</th>
+			<th width="10%">조회수</th>
+			<th width="15%">작성일</th>
+			<th width="8%">첨부파일</th>
 		</tr>
 		<c:choose>
 			<c:when test="${empty list }">
@@ -59,7 +59,10 @@
 						<td>${row.name }</td>
 						<td>${row.visitcount }</td>
 						<td>${row.postdate }</td>
-						<td>첨부파일</td>
+						<!-- 첨부파일이 있으면 첨부파일 다운로드 -->
+						<c:if test="${not empty row.ofile }">
+						<td><a href="../mvcboard/download.do?ofile=${row.ofile }&sfile=${row.sfile}&idx=${row.idx}">[다운로드]</a></td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
@@ -71,10 +74,10 @@
 	글쓰기 버튼 클릭 시 글쓰기 페이지로 이동 -> 글쓰기 버튼 클릭 시 페이지로 이동-->
 	<table border="1" width="90%" style="border-collapse: collapse">
 		<tr style="border-style: none">
-			<td align="center">
-				<%@  include file="../세션/PageNavi.jsp" %>
+			<td align="center" style="border: none">
+				<%@ include file="../세션/PageNavi.jsp" %>
 			</td>
-			<td align="right"><button type="button" onclick="location.href='/mvcboard/write.do'">글쓰기</button></td>
+			<td align="right" style="border: none"><button type="button" onclick="location.href='../mvcboard/write.do'">글쓰기</button></td>
 		</tr>
 	</table>
 

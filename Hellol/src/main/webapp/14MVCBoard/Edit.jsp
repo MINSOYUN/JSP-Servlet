@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\r\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,13 +50,13 @@
     <tr>
         <td>내용</td>
         <td>
-            <textarea name="content" style="width:90%;height:100px;">${ dto.content }</textarea>
+            <textarea name="content" style="width:90%;height:100px;">${fn:replace(dto.content, replaceChar, "<br>")}</textarea>
         </td>
     </tr>
     <tr>
         <td>첨부 파일</td>
         <td>
-            <input type="file" name="ofile" />
+            <input type="file" name="ofile" value = "${dto.ofile }"/>
         </td>
     </tr>
     <tr>

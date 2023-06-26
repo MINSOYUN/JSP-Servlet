@@ -11,7 +11,7 @@ public class Criteria {
 	int amount = 10; // 한 페이지당 보여질 게시물 수
 	
 	int startNo = 1; 
-	int endNo = 5;
+	int endNo = 10;
 	
 
 	public Criteria(int pageNo) {
