@@ -11,6 +11,8 @@
 	session.invalidate();
 	// 세션 아이디 새로 발급
 	request.getSession(true);
-	%>
+	 
+	response.sendRedirect("./book/list.book");
+%>
 </body>
 </html>

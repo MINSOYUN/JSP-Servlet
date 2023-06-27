@@ -8,10 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.library.common.ConnectionUtil;
 import com.library.vo.Book;
-
-
+import com.library.vo.Criteria;
 import com.library.common.DBConnPool;
 
 public class BookDao {
@@ -19,34 +17,40 @@ public class BookDao {
 	 * 도서목록 조회
 	 * @return
 	 */
-	public List<Book> getList(){
+	public List<Book> getList(Criteria cri){
 		List<Book> list = new ArrayList<Book>();
 		
 		//String sql = "select * from book order by no";
 		String sql = 
-				"select no, title"
-				+ "    , nvl((select 대여여부 "
-				+ "			 from 대여 "
-				+ "			where 도서번호 = no "
-				+ "			  and 대여여부='Y'),'N') rentyn "
-				+ "    , author, postdate "
-				+ "from book "
-				+ "order by no";
+				"select * from ( "
+				+ "    select t.*, rownum rn "
+				+ " from ( "
+				+ " select no, title, author, publisher, "
+				+ " nvl((select 대여여부 from 대여 where 도서번호 = no and 대여여부 ='Y'), 'N') rentyn"
+				+ "    , visitcount, case when trunc(postdate) = trunc(sysdate) then to_char(sysdate, 'YYYY-MM-DD HH24:MI:ss')"
+				+ " else to_char(postdate, 'YYYY-MM-DD') end"
+				+ " from book ";
 		
-		// try ( 리소스생성 ) => try문이 종료되면서 리소스를 자동으로 반납
-		try (Connection conn = ConnectionUtil.getConnection();
+		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
+			sql += "where " + cri.getSearchField() + " like '%" + cri.getSearchWord()+ "%' ";
+		}
+		sql += " order by no desc) t "
+				+") "
+				+"where rn between " + cri.getStartNo() + " and " + cri.getEndNo();
+
+		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();
-				// stmt.executeQuery : resultSet (질의한 쿼리에 대한 결과집합)
-				// stmt.executeUpdate : int (몇건이 처리되었는지!!!)
 				ResultSet rs = stmt.executeQuery(sql)){
 			while(rs.next()) {
 				int no = rs.getInt(1);
 				String title = rs.getString(2);
-				String rentYN = rs.getString(3);
-				String author = rs.getString(4);
-				String postdate = rs.getString(5);
+				String author = rs.getString(3);
+				String publisher = rs.getString(4);
+				String rentYN = rs.getString(5);
+				String visitcount = rs.getString(6);
+				String postdate = rs.getString(7);
 				
-				Book book = new Book(no, title, rentYN, author, postdate);
+				Book book = new Book(no, title, author, publisher, rentYN, visitcount, postdate);
 				list.add(book);
 			}
 
@@ -69,8 +73,6 @@ public class BookDao {
 		if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
 			sql += "where " + criteria.getSearchField() + " like '%" + criteria.getSearchWord() + "%' ";
 		}
-		
-		sql+=" order by no desc";
 			
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -81,7 +83,6 @@ public class BookDao {
 			rs.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("총 게시물의 수를 조회하던 중 예외가 발생하였습니다");
 		}
@@ -99,13 +100,10 @@ public class BookDao {
 		int res = 0;
 		
 		String sql = String.format
-	("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s')"
-				, book.getTitle(), book.getRentyn(), book.getAuthor());
+	("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s', '%s', 0, sysdate)"
+				, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getRentyn());
 
-		// 실행될 쿼리를 출력해봅니다
-		//System.out.println(sql);
-		
-		try (Connection conn = ConnectionUtil.getConnection();
+		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -121,16 +119,13 @@ public class BookDao {
 	 * 도서 삭제
 	 * @return
 	 */
-	public int delete(int no) {
+	public int delete(String noStr) {
 		int res = 0;
 		
 		String sql = String.format
-						("delete from book where no = %d", no);
-	
-		// 실행될 쿼리를 출력해봅니다
-		//System.out.println(sql);
+						("delete from book where no in (%s)", noStr);
 		
-		try (Connection conn = ConnectionUtil.getConnection();
+		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -155,7 +150,7 @@ public class BookDao {
 		// 실행될 쿼리를 출력해봅니다
 		//System.out.println(sql);
 		
-		try (Connection conn = ConnectionUtil.getConnection();
+		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -179,7 +174,7 @@ public class BookDao {
 					"SELECT RENTYN FROM BOOK WHERE NO = %s", bookNo);
 		
 		
-		try (Connection conn = ConnectionUtil.getConnection();
+		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt= conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);){
 			// 조회된 행이 있는지 확인
@@ -202,7 +197,7 @@ public class BookDao {
 	 * @param no
 	 */
 	public Book selectOne(String no) {
-		Book book = null;
+		Book book = new Book();
 		String sql = "select * from book where no = ?";
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -212,9 +207,11 @@ public class BookDao {
 			while(rs.next()) {
 				book.setNo(rs.getInt(1));
 				book.setTitle(rs.getString(2));
-				book.setRentyn(rs.getString(3));
-				book.setAuthor(rs.getString(4));
-				book.setPostdate(rs.getString(5));
+				book.setAuthor(rs.getString(3));
+				book.setPublisher(rs.getString(4));
+				book.setRentyn(rs.getString(5));
+				book.setVisitcount(rs.getString(6));
+				book.setPostdate(rs.getString(7));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -223,49 +220,75 @@ public class BookDao {
 		return book;
 	}
 
-
+	
 	/**
-	 * 페이징 된 게시글 조회
-	 * @param cri
+	 * 비밀번호 검증
+	 * @param pass
+	 * @param no
 	 * @return
 	 */
-	public List<Book> getListPage(Criteria cri){
-		List<Book> list = new ArrayList<Book>();
-		Book book = new Book();
+	public boolean confirmPassword(String pass) {
+		boolean res = false;
+		String sql ="select * from member where pw=?";
 		
-		String sql = "select * "
-				+ "from( "
-				+ "    select tb.*,  rownum rn "
-				+ "    from( "
-				+ "        select * "
-				+ "        from book ";
-		
-		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
-			sql += " where "+ cri.getSearchField()+ " like '%"+cri.getSearchWord() +"%' ";
-		}
-		sql += " order by no desc "
-				+ "    ) tb "
-				+ " ) "
-				+ " where rn between "+ cri.getStartNo()+" and "+ cri.getEndNo();
-
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, pass);
 			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				
-				book.setNo(rs.getInt(1));
-				book.setTitle(rs.getString(2));
-				book.setRentyn(rs.getString(3));
-				book.setAuthor(rs.getString(4));
-				book.setPostdate(rs.getString(5));
-				
-				list.add(book);
-			}
+			res = rs.next();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return list;
+		return res;
 	}
+
+	
+	/**
+	 * 조회수 상승
+	 * @param no
+	 * @return
+	 */
+	public int updateVisitcount(String no) {
+		int res = 0;
+		String sql = "update book set visitcount = visitcount +1 where no =?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, no);
+			res =pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	
+	public int updateBook(Book book) {
+		int res = 0;
+		String sql = "update book set title=?, author=?, publisher=?, rentyn=? where no=?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, book.getTitle());
+			pstmt.setString(2, book.getAuthor());
+			pstmt.setString(3, book.getPublisher());
+			pstmt.setString(4, book.getRentyn());
+			pstmt.setInt(5, book.getNo());
+			
+			System.out.println("title:"+book.getTitle());
+			System.out.println("getAuthor:"+book.getAuthor());
+			System.out.println("getPublisher:"+book.getPublisher());
+			System.out.println("getRentyn:"+book.getRentyn());
+			System.out.println("getNo:"+book.getNo());
+			
+			
+			res = pstmt.executeUpdate();
+			System.out.println("res: "+ res);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
 }

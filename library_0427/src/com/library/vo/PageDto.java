@@ -1,7 +1,5 @@
 package com.library.vo;
 
-import com.library.dao.Criteria;
-
 public class PageDto {
 
 	
@@ -28,28 +26,15 @@ public class PageDto {
 		super();
 		this.total = total;
 		this.criteria = criteria;
-		
-		// 페이지 블럭의 끝번호 구하기
-		// 7페이지 끝번호 요청 : 올림(7/10.0) * 10 = 10
-		// ->  7을 10으로 나눈 결과인 0.7을 올림한 1에 10을 곱한 10이 되어 페이지 블록의 끝 번호가 10
-		// 11페이지 끝번호 요청: 올림(11/10.0) * 10 = 20
-		// (형변환 int) 올림(페이지번호/한 페이지당 게시물 수) * 한 페이지당 게시물 수;
+
 		endNo = (int)Math.ceil(criteria.getPageNo() / 5.0) * 5;
 		System.out.println("pageNo : " + criteria.getPageNo());
-		// endNo - (amount - 1);
 		startNo = endNo - (5-1);
 		
-		// 진짜 끝 페이지 번호
-		// 총 행 / 한페이지당 개시물 수
-		// 55 / 10 = 5.5 -> 소수점 올림처리하여 6
 		realEnd = (int)Math.ceil((total * 1.0) / criteria.getAmount());
 		
-		// 페이지 블럭의 끝번호를 설정
-		// 사용자가 직접 페이지 번호를 입력하는 경우
-		// 게시물의 끝페이지보다 큰 경우, 게시물의 끝페이지로 설정
 		endNo = endNo> realEnd ? realEnd : endNo;
 
-		// 앞으로 이동 / 뒤로 이동
 		prev = startNo > 1 ? true : false;
 		next = endNo == realEnd ? false : true;
 	}

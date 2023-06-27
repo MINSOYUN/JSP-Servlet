@@ -1,4 +1,4 @@
-package com.library.dao;
+package com.library.vo;
 
 public class Criteria {
 	
@@ -54,7 +54,7 @@ public class Criteria {
 			this.searchWord = searchWord;
 		}
 		
-		if(pageNoStr != null) {
+		if(pageNoStr != null && !pageNoStr.equals("")) {
 			// 정수로 변환
 			pageNo = Integer.parseInt(pageNoStr);
 			

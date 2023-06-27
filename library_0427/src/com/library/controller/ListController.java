@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.library.dao.BookDao;
-import com.library.dao.Criteria;
 import com.library.vo.Book;
+import com.library.vo.Criteria;
 import com.library.vo.PageDto;
 
 
@@ -33,7 +33,7 @@ public class ListController extends HttpServlet{
 		cri.setSearchWord(req.getParameter("searchWord"));
 		
 		// 검색어, 페이지 정보를 담은 객체를 매개변수로 넣어 줍니다
-		List<Book> list = dao.getListPage(cri);
+		List<Book> list = dao.getList(cri);
 		
 		int totalCnt = dao.getToatlCnt(cri);
 		

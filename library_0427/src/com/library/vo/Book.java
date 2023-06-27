@@ -3,24 +3,30 @@ package com.library.vo;
 public class Book {
 	private int no;		// 도서 일련번호
 	private String title;	// 도서명
-	private String rentyn;	// 도서 대여여부
 	private String author;	// 작가
+	private String publisher;
+	private String rentyn;	// 도서 대여여부
+	private String visitcount;
 	private String postdate;
 	
+	
 	// 도서를 추가할 경우 도서명과 작가명만 알고 있으면 생성 가능
-	public Book(String title, String author) {
+	public Book(String title, String author, String publisher) {
 		this.title = title;
 		this.author = author;
+		this.publisher = publisher;
 		// 신규도서이므로 N
 		this.rentyn = "N";
 	}
 	
-	public Book(int no, String title, String rentyn, String author, String postdate) {
+	public Book(int no, String title, String author, String publisher, String rentyn, String visitcount, String postdate) {
 		super();
 		this.no = no;
 		this.title = title;
-		this.rentyn = rentyn;
 		this.author = author;
+		this.publisher = publisher;
+		this.rentyn = rentyn;
+		this.visitcount = visitcount;
 		this.postdate = postdate;
 	}
 	
@@ -72,6 +78,22 @@ public class Book {
 	}
 	public void setPostdate(String postdate) {
 		this.postdate = postdate;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getVisitcount() {
+		return visitcount;
+	}
+
+	public void setVisitcount(String visitcount) {
+		this.visitcount = visitcount;
 	}
 	
 }

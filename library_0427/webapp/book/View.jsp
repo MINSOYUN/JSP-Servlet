@@ -10,7 +10,7 @@
 <body>
 <h3>도서 상세보기(View)</h3>
 
-<table border="2" width="90%" style="border-collapse: collapse">
+<table border="2" width="90%" height = "200px" style="border-collapse: collapse">
     <colgroup>
         <col width="15%"/> <col width="35%"/>
         <col width="15%"/> <col width="*"/>
@@ -26,23 +26,38 @@
     </tr>
     <tr>
         <td>저자</td><td >${ book.author }</td>
+        <td>출판사</td><td >${ book.publisher }</td>
+    </tr>
+    <tr>
+       <td>조회수</td><td >${ book.visitcount }</td>
        <td>등록일</td><td >${ book.postdate }</td>
     </tr>
+</table>
 
+<table border="1" width="90%" height = "150px" >
     <!-- 하단 메뉴(버튼) -->
     <tr>
         <td colspan="4" align="center">
-            <button type="button" onclick="location.href='../mvcboard/pass.do?mode=edit&idx=${ param.idx }';">
+            <button type="button" onclick="location.href='../book/pass.book?mode=edit&no=${ param.no }';">
                 수정하기
             </button>
-            <button type="button" onclick="location.href='../mvcboard/pass.do?mode=delete&idx=${ param.idx }';">
+            <button type="button" onclick="location.href='../book/pass.book?mode=delete&no=${ param.no }';">
                 삭제하기
             </button>
-            
-            <button type="button" onclick="location.href='../mvcboard/list.do';">
+            <button type="button" onclick="location.href='../book/list.book';">
                 목록 바로가기
             </button>
-        </td>
+       </td>
+     </tr>       
+     <tr>
+        <td colspan="4" align="center">
+            <button type="button" onclick="location.href='';">
+                대여하기
+            </button>
+            <button type="button" onclick="location.href='';">
+                반납하기
+            </button>
+         </td>
     </tr>
 </table>
 </body>

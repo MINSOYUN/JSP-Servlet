@@ -18,14 +18,13 @@
 	<!-- 검색폼 -->
 	<form method="get" name="searchForm">
 		<table border="1" width="90%">
-		
 		<input type="hidden" name="pageNo" value="${param.pageNo }">
 			<tr>
 				<td align="center">
 				<select	name="searchField">
 						<option value="title" ${param.searchField eq "title" ? "selected" : "" }>제목</option>
 						<!-- selected 하나만 작성해도 선택되므로 삼항 연산자 통해서 받아온 param의 값이 value와 같다면 selected -->
-						<option value=name" ${param.searchField eq "na,me" ? "selected" : ""}>작성자</option>
+						<option value=name" ${param.searchField eq "name" ? "selected" : ""}>작성자</option>
 				</select>
 					<input type="text" name="searchWord" value="${param.searchWord }" />
 					<input type="submit" value="검색하기" />

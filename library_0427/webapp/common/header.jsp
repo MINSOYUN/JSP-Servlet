@@ -4,48 +4,60 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+
+      #header a:hover{
+      		display: inline-block;
+            background-color: rgba(247, 176, 150, 0.733);
+            font-weight: bold;
+        }
+      #header div {
+ 	 		display: inline-block;
+ 	 		margin-right: 100px;
+ 	 		border-radius: 20%;
+		}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
 <header>
+
 	userId : ${sessionScope.userId }
-	adminYN : ${sessionScope.adminYn }
-	
+	adminYn : ${sessionScope.adminYn }
+<table border="2" width="100%" style="border-collapse: collapse; height:50px" id="header">
+    <tr>
 	<!-- 어드민 -->
-	<c:if test="${sessionScope.adminYn } eq 'Y'" var="res">
-		<div>로고</div>
-		<div>
-			<a href="">도서관리</a>
-			<a href="">사용자관리</a>
-		</div>
-			<div>로그아웃</div>
-	</c:if>
+		<td align="center">
+			<c:if test="${sessionScope.adminYn eq 'Y'}" var="res">
+				<div>로고</div>
+				<div><a href="">도서관리</a></div>
+				<div><a href="">사용자관리</a></div>
+			</c:if>
 	
 	<!-- 사용자 -->
-	<c:if test="${not res }">
-		<div>로고</div>
-		<div>
-			<a href="">도서관리시스템</a>
-		</div>
-			<a href="">마이페이지</a>
-			
+			<c:if test="${sessionScope.adminYn eq 'N'}">
+				<div>로고</div>
+				<div>
+					<a href="">도서관리시스템</a>
+					<a href="">마이페이지</a>
+				</div>
+			</c:if>			
+    
 	<!-- 로그인 x -->
-	<c:if test="${empty sessionScope.userId }" var="res1">
-		<div>로그인</div>
-	</c:if>
-	
-	
-	</c:if>
-	
-	<!-- 사용자 -->
-	<c:if test="${sessionScope.userId }">
-		<a href = "${pageContext.request.contextPath }/book/loginMember.do">사용자 모드</a> <br>
-	</c:if>
-	
-	<!-- 로그인 전 사용자 -->
-	
+			<c:if test="${empty sessionScope.userId }" var="res1">
+				<div><a href="./../login.jsp">로그인</a></div>
+			</c:if>
+	<!-- 로그인 후 -->		
+			<c:if test="${not res1}" var="res1">
+				<div><a href="../login.jsp">로그아웃</a></div>
+			</c:if>
+		</td>
+   </tr>
+
+</table>	
+
 </header>
 
 </body>
