@@ -1,7 +1,14 @@
 package com.library.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.library.dao.MemberDao;
+import com.library.vo.Book;
+import com.library.vo.Criteria;
 import com.library.vo.Member;
+import com.library.vo.PageDto;
 
 public class MemberService {
 	MemberDao dao = new MemberDao();
@@ -23,16 +30,25 @@ public class MemberService {
 		}
 		return member;
 	}
-
-	public void insert (String id, String pw, String name, String adminYN) {
-		
+	
+	
+	/**
+	 * 멤버추가
+	 * @param id
+	 * @param pw
+	 * @param name
+	 * @param adminYN
+	 * @return
+	 */
+	public int insert (String id, String pw, String name, String adminYN) {
+		int res = 0;
 		// 아이디 중복체크
 		boolean idCheck = dao.idCheck(id);
 		if(idCheck) {
 			
 			Member member = 
 					new Member(id, pw, name, adminYN, null, null);
-			int res = dao.insert(member);
+			res = dao.insert(member);
 			if(res>0) {
 				System.out.println(res+"건 입력되었습니다.");
 			}else {
@@ -42,10 +58,14 @@ public class MemberService {
 		} else {
 			System.err.println("아이디가 중복 되었습니다.");
 		}
-		
-		
+		return res;
 	}
-
+	
+	
+	/**
+	 * 멤버 삭제
+	 * @param delId
+	 */
 	public void delete(String delId) {
 		int res= dao.delete(delId);
 		
@@ -56,7 +76,13 @@ public class MemberService {
 			System.out.println("관리자에게 문의해주세요.");
 		}
 	}
-
+	
+	
+	/**
+	 * 아이디 체크
+	 * @param id
+	 * @return
+	 */
 	public boolean idCheck(String id) {
 		boolean res = dao.idCheck(id);
 		if(!res) {
@@ -66,7 +92,13 @@ public class MemberService {
 	}
 	
 	
-	
+	public Map<String, Object> getMember(Criteria cri){
+		Map<String, Object> map = new HashMap<>();
+		List<Member> list = dao.getMember();
+
+		map.put("list", list);
+		return map;
+	}
 }
 
 

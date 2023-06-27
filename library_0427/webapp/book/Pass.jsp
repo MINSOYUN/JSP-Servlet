@@ -17,7 +17,7 @@
 </script>
 </head>
 <body>    
-<h3>비밀번호 검증(Pass)</h3>
+<h3>관리자 비밀번호 검증(Pass)</h3>
 <p>비밀번호를 입력하세요</p>
 <form name="writeFrm" method="post" action="../book/pass.book" onsubmit="return validateForm(this);">
 <input type="hidden" name="no" value="${ param.no }" />

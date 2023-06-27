@@ -266,20 +266,18 @@ public class BookDao {
 	
 	public int updateBook(Book book) {
 		int res = 0;
-		String sql = "update book set title=?, author=?, publisher=?, rentyn=? where no=?";
+		String sql = "update book set title=?, author=?, publisher=? where no=?";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
 			pstmt.setString(1, book.getTitle());
 			pstmt.setString(2, book.getAuthor());
 			pstmt.setString(3, book.getPublisher());
-			pstmt.setString(4, book.getRentyn());
-			pstmt.setInt(5, book.getNo());
+			pstmt.setInt(4, book.getNo());
 			
 			System.out.println("title:"+book.getTitle());
 			System.out.println("getAuthor:"+book.getAuthor());
 			System.out.println("getPublisher:"+book.getPublisher());
-			System.out.println("getRentyn:"+book.getRentyn());
 			System.out.println("getNo:"+book.getNo());
 			
 			

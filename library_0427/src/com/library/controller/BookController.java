@@ -23,7 +23,6 @@ public class BookController extends HttpServlet{
 	
 	BookService bs = new BookService();
 	
-
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,8 +51,8 @@ public class BookController extends HttpServlet{
 			}
 			
 			// 포워딩
-			resp.sendRedirect("./list.book");
-			//req.getRequestDispatcher("./list.book").forward(req, resp);
+			//resp.sendRedirect("./list.book");
+			req.getRequestDispatcher("./list.book").forward(req, resp);
 			
 			
 		// 상세보기
@@ -90,11 +89,12 @@ public class BookController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI();
 		
+		// 도서 등록
 		if(uri.indexOf("write") > 0) {
-			req.getParameter("title");
 			int res = bs.insert(req.getParameter("title"), req.getParameter("author"), req.getParameter("publisher"));
 			
 			req.setAttribute("message", res+"건 등록되었습니다");
+			
 			resp.sendRedirect("./list.book");
 		
 		

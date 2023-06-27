@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.library.common.DBConnPool;
+import com.library.vo.Book;
 import com.library.vo.Member;
 
 public class MemberDao {
@@ -45,11 +48,17 @@ public class MemberDao {
 		return member;
 	}
 	
+	
+	/**
+	 * 멤버 추가
+	 * @param member
+	 * @return
+	 */
 	public int insert(Member member) {
 		int res = 0;
 		String sql = String.format(
 				"INSERT INTO MEMBER (id, pw, name, adminYN)  VALUES "
-				+ "('%s','%s','%s')"
+				+ "('%s','%s','%s','%s')"
 				, member.getId(), member.getPw()
 				, member.getName(), member.getAdminyn());
 		
@@ -94,6 +103,12 @@ public class MemberDao {
 		return res;
 	}
 	
+	
+	/**
+	 * 멤버 삭제
+	 * @param id
+	 * @return
+	 */
 	public int delete(String id) {
 		int res = 0;
 		
@@ -112,33 +127,32 @@ public class MemberDao {
 		
 		return res;
 	}
+	
+	
+	
+	public List<Member> getMember(){
+		List<Member> list = new ArrayList<Member>();
+		String sql="select * from member";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)){
+			while(rs.next()) {
+				String id = rs.getString(1);
+				String pw = rs.getString(2);
+				String name = rs.getString(3);
+				String adminyn = rs.getString(4);
+				String status = rs.getString(5);
+				String grade = rs.getString(6);
+				
+				Member member = new Member(id, pw, name, adminyn, status, grade);
+				list.add(member);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

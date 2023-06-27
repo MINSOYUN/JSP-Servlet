@@ -10,6 +10,7 @@
       		display: inline-block;
             background-color: rgba(247, 176, 150, 0.733);
             font-weight: bold;
+            border-radius:20%;
         }
       #header div {
  	 		display: inline-block;
@@ -32,8 +33,8 @@
 		<td align="center">
 			<c:if test="${sessionScope.adminYn eq 'Y'}" var="res">
 				<div>로고</div>
-				<div><a href="">도서관리</a></div>
-				<div><a href="">사용자관리</a></div>
+				<div><a href="../loginAdmin.jsp">도서관리</a></div>
+				<div><a href="../loginAdmin2.jsp">사용자관리</a></div>
 			</c:if>
 	
 	<!-- 사용자 -->
