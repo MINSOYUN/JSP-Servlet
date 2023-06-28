@@ -61,7 +61,6 @@
 		<th width="10%">조회수</th>
 		<th width="20%">등록일</th>
 	</tr>
-	<tr>
 		<c:choose>
 			<c:when test="${empty map.list }">
 				<tr>

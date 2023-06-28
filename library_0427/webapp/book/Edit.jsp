@@ -30,7 +30,7 @@
 </head>
 <h2>도서 정보 수정하기</h3>
 <form name="writeFrm" method="post" action="../book/edit.book" onsubmit="return validateForm(this);">
-<input type="hidden" name="no" value="${ dto.no }"/>
+<input type="hidden" name="no" value="${ book.no }"/>
 <table border="1" width="100%" height="150px">
     <tr>
         <td>도서명</td>

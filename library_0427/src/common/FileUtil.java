@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,6 +106,31 @@ public class FileUtil {
 			if(file.exists()) {
 				file.delete();
 			}
+		}
+		
+		
+		/**
+		 * 파일명 받아와 새 파일명으로 변경
+		 * @return
+		 */
+		public static String fileNameChange(String saveDirectory, String fileName) {
+			String ext = fileName.substring(fileName.lastIndexOf("."));
+			
+			String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());  // 현재시간 추출
+		    String oFileName = fileName.substring(0, fileName.lastIndexOf("."));  // 확장자 제외한 파일명 추출
+			
+			String newFileName = oFileName + "_" + now + ext;  // 원본파일명 + 시간 + 확장자
+			
+			System.out.println("원본파일명 : " + fileName);
+			System.out.println("신규파일명 : " + newFileName);
+			
+			File oldFile = new File(saveDirectory + File.separator + fileName);
+			File newFile = new File(saveDirectory + File.separator + newFileName);
+			
+			// 파일의 경로와 이름을 재지정하여 경로 포함되어 있는 newFile로 변경 
+			oldFile.renameTo(newFile);  // 파일명 변경
+			
+			return newFileName;
 		}
 	
 	public FileUtil() {

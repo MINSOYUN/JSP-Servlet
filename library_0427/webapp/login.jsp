@@ -6,7 +6,50 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel ="stylesheet" href="css/style.css">
+<style>
+	#rightside {
+		width: 300px;
+		background-color: #f2f2f2;
+		padding: 20px;
+	}
+
+	.side1 {
+		margin-top: 50px;
+	}
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	.loginbox {
+		margin-bottom: 20px;
+	}
+
+	#login input[type="text"],
+	#login input[type="password"] {
+		width: 80%;
+		padding: 10px; 
+		margin-bottom: 10px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+	}
+
+	#info {
+		font-size: 12px;
+		color: #777;
+	}
+
+	#info input[type="checkbox"] {
+		margin-right: 5px;
+	}
+
+	#info a {
+		margin-right: 10px;
+		text-decoration: none;
+		color: #777;
+	}
+
+</style>
 </head>
 <body>
 <aside id='rightside'>

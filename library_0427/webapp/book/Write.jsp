@@ -31,11 +31,17 @@
     }
 </script>
 </head>
-<h2>파일 첨부형 게시판 - 글쓰기(Write)</h2>
+<h3>도서 등록하기</h3>
 
 <form name="writeFrm" method="post"
-      action="../book/write.book" onsubmit="return validateForm(this);">
+      action="../book/write.book" enctype="multipart/form-data" onsubmit="return validateForm(this);">
 <table border="1" width="90%" style="border-collapse: collapse" height="150px">
+    <tr>
+        <td>아이디</td>
+        <td colspan="4">
+            <input type="text" name="id" style="width:90%;" value="${sessionScope.userId }" readonly="readonly" />
+        </td>
+    </tr>
     <tr>
         <td>제목</td>
         <td>
@@ -54,6 +60,12 @@
         <td>대여여부</td>
         <td>
             <input type="text" name="rentyn" style="width:90%;" />
+        </td>
+    </tr>
+    <tr>
+        <td>책이미지</td>
+        <td>
+            <input type="file" name="bookImg" style="width:90%;" />
         </td>
     </tr>
     <tr>

@@ -1,3 +1,4 @@
+
 package com.library.controller;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Response;
 
@@ -15,7 +17,9 @@ import com.library.dao.BookDao;
 import com.library.service.BookService;
 import com.library.vo.Book;
 import com.library.vo.Criteria;
+import com.oreilly.servlet.MultipartRequest;
 
+import common.FileUtil;
 import common.JSFunction;
 
 @WebServlet("*.book")
@@ -58,7 +62,6 @@ public class BookController extends HttpServlet{
 		// 상세보기
 		} else if(uri.indexOf("view") > 0) {
 			req.setAttribute("book", bs.selectOne(req.getParameter("no")));
-			
 			req.getRequestDispatcher("./View.jsp").forward(req, resp);
 			
 			
@@ -71,16 +74,23 @@ public class BookController extends HttpServlet{
 		} else if(uri.indexOf("pass") > 0) {
 			req.setAttribute("no", req.getParameter("no"));
 			req.setAttribute("mode",req.getParameter("mode"));
-			
 			req.getRequestDispatcher("./Pass.jsp").forward(req, resp);
 	
 			
-			// 도서 수정
+		// 도서 수정
 		} else if(uri.indexOf("edit")>0) {
 			Book book = bs.selectOne(req.getParameter("no"));
 			req.setAttribute("book", book);
 			
 			req.getRequestDispatcher("./Edit.jsp").forward(req, resp);
+		
+		
+		// 다운로드
+		} else if(uri.indexOf("download")>0) {
+			String ofile = req.getParameter("ofile");
+			String sfile = req.getParameter("sfile");
+			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+			FileUtil.download(req, resp, saveDirectory, ofile, sfile);
 		}
 	}
 	
@@ -91,32 +101,80 @@ public class BookController extends HttpServlet{
 		
 		// 도서 등록
 		if(uri.indexOf("write") > 0) {
-			int res = bs.insert(req.getParameter("title"), req.getParameter("author"), req.getParameter("publisher"));
+			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+
+			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			
-			req.setAttribute("message", res+"건 등록되었습니다");
-			
-			resp.sendRedirect("./list.book");
-		
-		
-		// 비밀번호 검증
-		} else if(uri.indexOf("pass") > 0) {
-			String no = req.getParameter("no");
-			String mode = req.getParameter("mode");
-			String pass = req.getParameter("pass");
-			
-			boolean res = bs.confirmPassword(pass);
-			if(res) {
-				if(mode.equals("edit")) {
-					resp.sendRedirect("./edit.book");
-				} else if(mode.equals("delete")) {
-					resp.sendRedirect("./delete.book");
+			Book book = new Book(mr.getParameter("title"), mr.getParameter("author"), mr.getParameter("publisher"));
+				
+				String ofile = mr.getFilesystemName("bookImg");
+				System.out.println("ofile" + ofile);
+				
+				if(ofile != null && !"".equals(ofile)) {
+					String sfile = FileUtil.fileNameChange(saveDirectory, ofile);	
+					
+					// 경로 포함되어 있지 않은 파일명 저장
+					book.setOfile(ofile);
+					book.setSfile(sfile);
 				}
-			} else {
-				System.out.println("비밀번호가 올바르지 않습니다");
-				req.getRequestDispatcher("./Pass.jsp").forward(req, resp);
-			}
-		
+				
+				int res = bs.insert(book);
 			
+				if(res>0) {
+					JSFunction.alertLocation(resp, "./list.book", "등록되었습니다");
+				} else {
+					JSFunction.alertBack(resp, "등록 중 예외사항이 발생하였습니다");
+				}
+				
+		
+		
+		// 도서 대여
+		} else if(uri.indexOf("rent")>0) {
+			HttpSession session = req.getSession();
+			
+			if(session.getAttribute("userId") == null) {
+				JSFunction.alertBack(resp, "로그인 후 이용 가능한 메뉴입니다");
+				return;
+			}
+			
+			String no = req.getParameter("no");
+			
+			Book book = new Book();
+			book.setNo(req.getParameter("no"));
+			book.setId(session.getAttribute("userId").toString());
+			
+			int res = bs.rentBook(book);
+		
+			if(res>0) {
+				JSFunction.alertLocation(resp, "./view.book?no="+book.getNo(),"대여되었습니다");
+			} else {
+				JSFunction.alertBack(resp, "대여 중 오류가 발생하였습니다");
+			}
+			
+		
+		// 도서 반납
+		} else if(uri.indexOf("return")>0) {
+			HttpSession session = req.getSession();
+			
+			if(session.getAttribute("userId") == null) {
+				JSFunction.alertBack(resp, "로그인 후 이용 가능한 메뉴입니다");
+				return;
+			}
+			
+			Book book = new Book();
+			String no = req.getParameter("no");
+			String rentno = req.getParameter("rentno");
+			book.setId(session.getAttribute("userId").toString());
+			
+			int res = bs.returnBook(no, rentno);
+			
+			if(res>0) {
+				JSFunction.alertLocation(resp, "./view.book?no="+book.getNo(),"반납되었습니다");
+			} else {
+				JSFunction.alertBack(resp, "반납 중 오류가 발생하였습니다");
+			}
+			
+
 		// 수정
 		} else if(uri.indexOf("edit") > 0) {
 			String title = req.getParameter("title");
@@ -128,10 +186,12 @@ public class BookController extends HttpServlet{
 			book.setTitle(title);
 			book.setAuthor(author);
 			book.setPublisher(publisher);
+			book.setNo(no);
 			
 			int res = bs.updateBook(book);
+			
 			if(res>0) {
-				JSFunction.alertLocation(resp, "../book/view.book?no="+no, "도서 목록을 수정하였습니다");
+				JSFunction.alertLocation(resp, "../book/view.book?no="+no ,"도서 목록을 수정하였습니다");
 			} else {
 				JSFunction.alertBack(resp, "도서 목록 수정에 실패하였습니다");
 			}

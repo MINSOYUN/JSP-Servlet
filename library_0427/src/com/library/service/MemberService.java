@@ -1,5 +1,6 @@
 package com.library.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,24 +41,8 @@ public class MemberService {
 	 * @param adminYN
 	 * @return
 	 */
-	public int insert (String id, String pw, String name, String adminYN) {
-		int res = 0;
-		// 아이디 중복체크
-		boolean idCheck = dao.idCheck(id);
-		if(idCheck) {
-			
-			Member member = 
-					new Member(id, pw, name, adminYN, null, null);
-			res = dao.insert(member);
-			if(res>0) {
-				System.out.println(res+"건 입력되었습니다.");
-			}else {
-				System.out.println("입력중 오류가 발생 하였습니다.");
-				System.out.println("관리자에게 문의해주세요.");
-			}
-		} else {
-			System.err.println("아이디가 중복 되었습니다.");
-		}
+	public int insert (Member member) {
+		int res = dao.insert(member);
 		return res;
 	}
 	
@@ -90,14 +75,24 @@ public class MemberService {
 		}
 		return res;
 	}
-	
-	
-	public Map<String, Object> getMember(Criteria cri){
-		Map<String, Object> map = new HashMap<>();
-		List<Member> list = dao.getMember();
 
-		map.put("list", list);
-		return map;
+	
+	/**
+	 * 멤버 조회
+	 * @param cri
+	 * @return
+	 */
+	public List<Member> getList(Criteria cri) {
+		List<Member> list = new ArrayList<Member>();
+		list = dao.getList(cri);
+		// 리스트 조회
+		return list;
+	}
+
+
+	public Member selectOne(String id) {
+		Member member = dao.selectOne(id);
+		return member;
 	}
 }
 

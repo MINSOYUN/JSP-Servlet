@@ -8,6 +8,9 @@ public class Member {
 	private String status;
 	private String grade;
 	
+	private String ofile;	// 원본 파일명
+	private String sfile;  // 저장된 파일명
+	
 	
 	public Member(String id, String pw, String name, String adminyn, String status, String grade) {
 		super();
@@ -19,6 +22,24 @@ public class Member {
 		this.grade = grade;
 	}
 	
+	
+	
+	public Member(String id, String pw, String name) {
+		super();
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.adminyn = "N";
+		this.status = "N";
+		this.grade = "C";
+	}
+
+
+
+	public Member() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 		return getId()
@@ -63,6 +84,21 @@ public class Member {
 	}
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+	public String getOfile() {
+		return ofile;
+	}
+	public void setOfile(String ofile) {
+		this.ofile = ofile;
+	}
+
+	public String getSfile() {
+		return sfile;
+	}
+
+
+	public void setSfile(String sfile) {
+		this.sfile = sfile;
 	}
 	
 	

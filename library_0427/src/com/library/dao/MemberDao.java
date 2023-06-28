@@ -1,6 +1,7 @@
 package com.library.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import com.library.common.DBConnPool;
 import com.library.vo.Book;
+import com.library.vo.Criteria;
 import com.library.vo.Member;
 
 public class MemberDao {
@@ -57,10 +59,10 @@ public class MemberDao {
 	public int insert(Member member) {
 		int res = 0;
 		String sql = String.format(
-				"INSERT INTO MEMBER (id, pw, name, adminYN)  VALUES "
-				+ "('%s','%s','%s','%s')"
+				"INSERT INTO MEMBER (id, pw, name, ofile, sfile)  VALUES "
+				+ "('%s','%s','%s','%s', '%s')"
 				, member.getId(), member.getPw()
-				, member.getName(), member.getAdminyn());
+				, member.getName(), member.getOfile(), member.getSfile());
 		
 		System.out.println(sql);
 		try (Connection conn = DBConnPool.getConnection();
@@ -130,13 +132,23 @@ public class MemberDao {
 	
 	
 	
-	public List<Member> getMember(){
+	/**
+	 * 멤버 조회
+	 * @param cri
+	 * @return
+	 */
+	public List<Member> getList(Criteria cri){
 		List<Member> list = new ArrayList<Member>();
 		String sql="select * from member";
+		
+		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
+			sql += "where " + cri.getSearchField() + " like '%" + cri.getSearchWord()+ "%' ";
+		}
 		
 		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)){
+			
 			while(rs.next()) {
 				String id = rs.getString(1);
 				String pw = rs.getString(2);
@@ -154,5 +166,32 @@ public class MemberDao {
 		}
 		
 		return list;
+	}
+
+
+	public Member selectOne(String id) {
+		Member member = new Member();
+		String sql = "select * from member where id=?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				member.setId(rs.getString(1));
+				member.setPw(rs.getString(2));
+				member.setName(rs.getString(3));
+				member.setAdminyn(rs.getString(4));
+				member.setStatus(rs.getString(5));
+				member.setGrade(rs.getString(6));
+				member.setOfile(rs.getString(7));
+				member.setSfile(rs.getString(8));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return member;
 	}
 }
