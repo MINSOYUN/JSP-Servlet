@@ -1,104 +1,108 @@
-<%@page import="com.util.CookieManager"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="css/style.css">
-<style>
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: Arial, sans-serif;
-	}
+    <meta charset="UTF-8">
+    <title>파일 첨부형 게시판</title>
+    <style>
+        body {
+            background-color: #F9F9F9;
+        }
 
-	#rightside {
-		width: 300px;
-		background-color: #f2f2f2;
-		padding: 20px;
-	}
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
 
-	.side1 {
-		margin-top: 50px;
-	}
+        table td {
+            padding: 10px;
+        }
 
-	h1 {
-		margin-bottom: 20px;
-	}
+        input[type="text"], textarea{
+        	width: 90%;
+        	padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-	.loginbox {
-		margin-bottom: 20px;
-	}
+        input[type="submit"],
+        input[type="reset"],
+        button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            color: #FFF;
+        }
 
-	#login input[type="text"],
-	#login input[type="password"] {
-		width: 100%;
-		padding: 10px;
-		margin-bottom: 10px;
-		border-radius: 5px;
-		border: 1px solid #ccc;
-	}
+        button {
+            background-color: #fcbe62;
+        }
 
-	#button {
-		text-align: right;
-	}
-
-	#info {
-		font-size: 12px;
-		color: #777;
-	}
-
-	#info input[type="checkbox"] {
-		margin-right: 5px;
-	}
-
-	#info a {
-		margin-right: 10px;
-		text-decoration: none;
-		color: #777;
-	}
-
-</style>
+        button:hover {
+            background-color: #FF9800;
+        }
+    </style>
 </head>
 <body>
-<aside id="rightside">
-	<div class="side1">
-		<%
-		String error = request.getParameter("loginError");
-		if (error != null && "Y".equals(error)) {
-			out.print("<script>alert('아이디 비밀번호를 확인해주세요')</script>");
-		}
+    <h3>관리자 등록하기</h3>
 
-		String userId = CookieManager.readCookie(request, "userId");
-
-		String name = request.getParameter("name");
-
-		if (name != null && !name.equals("")) {
-			out.print("<h1>" + name + "님 환영합니다. </h1>");
-		} else {
-		%> <!-- 로그인 성공하면 div 안보이게 else에서만 출력되게 한다 -->
-		<form action="./login/loginAction.do" method="post"> <!-- 나의 현재위치 ./을 기준으로 위치 잡기 -->
-			<div class="loginbox">
-				<div id="login">
-					<input type="text" name="userid" id="userid" placeholder="ID를 입력해주세요." value=<%=userId %>>
-					<input type="password" name="userpw" id="userpw" placeholder="PW를 입력해주세요.">
-				</div>
-				<div id="button">
-					<input type="submit" value="로그인">
-				</div>
-			</div>
-			<div id="info">
-				<input type="checkbox" name="saveCheck" value="Y" <%= !("").equals(userId) ? "checked" : "" %>>아이디 저장
-				<a href="">회원가입</a>
-				<a href="">ID찾기</a>
-				<a href="">PW찾기</a>
-			</div>
-		</form>
-		<% } %>
-	</div>
-</aside>
-</body>
-</html>
-
+    <form name="writeFrm" method="post" action="../member/write.member" enctype="multipart/form-data"
+        onsubmit="return validateForm(this);">
+        <table border="1" height="200">
+            <tr>
+                <td>아이디</td>
+                <td>
+               		${ member.id }
+                </td>
+                <td>비밀번호</td>
+                <td>
+					${ member.pw }
+                </td>
+            </tr>
+            <tr>
+                <td>이름</td>
+                <td colspan="3">
+                   { member.name }
+                </td>
+            </tr>
+            <tr>
+                <td>관리자여부</td>
+                <td colspan="3">
+                   ${ member.adminyn }
+                </td>
+            </tr>
+            <tr>
+                <td>상태</td>
+                <td>
+                    ${ member.status }
+                </td>
+                <td>등급</td>
+        		<td>
+          			 ${ member.grade }
+       			</td>
+       		</tr>
+   			 <tr>
+		         <td>자기소개</td>
+		     	 <td colspan="4">
+			             <textarea name="" id="" cols="100" rows="10"></textarea>
+			     </td>
+   			</tr>
+		    <tr>
+		        <td colspan="4" align="center">
+		            <button type="submit">작성 완료</button>
+		            <button type="reset">RESET</button>
+		            <button type="button" onclick="location.href='./listMember.member';">
+		               관리자 목록 바로가기
+		            </button>
+		        </td>
+		    </tr>
+</table>    
+</form>

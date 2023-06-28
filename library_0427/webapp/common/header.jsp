@@ -5,11 +5,14 @@
 <html>
 <head>
 <style type="text/css">
+
 	#header {
 		background-color: #F9F9F9;
 		padding: 10px;
+		width: 100%;
+		text-align: center;
 	}
-
+	
 	#header a {
 		display: inline-block;
 		background-color: rgba(247, 176, 150, 0.733);

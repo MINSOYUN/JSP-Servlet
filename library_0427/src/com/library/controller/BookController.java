@@ -169,7 +169,7 @@ public class BookController extends HttpServlet{
 			int res = bs.returnBook(no, rentno);
 			
 			if(res>0) {
-				JSFunction.alertLocation(resp, "./view.book?no="+book.getNo(),"반납되었습니다");
+				JSFunction.alertLocation(resp, "./view.book?no="+no, res+"건 반납되었습니다");
 			} else {
 				JSFunction.alertBack(resp, "반납 중 오류가 발생하였습니다");
 			}

@@ -176,9 +176,12 @@ public class BookDao {
 				  + " b.no, b.title, d.대여여부, b.author, b.publisher, b.visitcount, b.postdate, d.아이디"
 				  + " , to_char(대여일,'yy/mm/dd') 대여일, to_char(반납가능일,'yy/mm/dd') 반납가능일" 
 				  + " , 반납일, sfile, ofile, d.대여번호"
-				  + " from book b, 대여 d where b.rentno = d.대여번호(+) and b.no="+no;
+				  + " from book b, 대여 d where b.rentno = d.대여번호(+) and b.no=?";
+		
+		System.out.println("sql:"+sql);
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, no);
 			ResultSet rs = pstmt.executeQuery();
 
 			while(rs.next()) {
@@ -309,10 +312,9 @@ public class BookDao {
 				pstmt.setString(2, book.getNo());
 				
 				res = pstmt.executeUpdate(); // 업데이트 성공
-				
+			
 				System.out.println("sql2:"+sql2);
 				System.out.println("res:"+res);
-				
 				pstmt.close();
 				
 				// sql 3
@@ -388,9 +390,13 @@ public class BookDao {
 				System.out.println("sql3:"+sql3);
 				System.out.println("res:"+res);
 				
-				pstmt.close();
+				if(res>0) {
+					conn.commit();  // 성공하면 커밋
+				} else {
+					conn.rollback();  // 실패하면 롤백
+				}
+				
 			}
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -398,5 +404,8 @@ public class BookDao {
 		
 		return res;
 	}
+
+	
+	
 
 }

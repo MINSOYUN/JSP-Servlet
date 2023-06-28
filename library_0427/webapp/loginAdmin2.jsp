@@ -65,6 +65,7 @@
 	</style>
 </head>
 <body>
+<%@ include file = "/common/header.jsp" %>
 <%
  if(session.getAttribute("member") != null){
 	 Member m = (Member)session.getAttribute("member");
@@ -74,9 +75,10 @@
 		<ul class="menu">
 			<li><a href="./member/listMember.member">관리자 목록 보기</a></li> 
 			<li><a href="./member/write.member">관리자 등록[바로가기]</a></li> 
-			<li><a href="">관리자 삭제</a></li>
-		</ul>
+			<li><a href="./member/delete.member">관리자 삭제</a></li>
+			<li><a href="./book/list.book">도서 목록 바로가기</a></li>
 			<button class="button" onclick="location.href='logout.jsp'">로그아웃</button>
+		</ul>
 <% } %>
 <%
  if(session.getAttribute("member") == null){

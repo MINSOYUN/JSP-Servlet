@@ -115,14 +115,14 @@ public class MemberDao {
 		int res = 0;
 		
 		String sql = String.format
-				("delete from member where id = '%s'",id);
+				("delete from member where id in ('%s')",id);
 		
-		System.out.println(sql);
 		
 		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();){
 			
 			res = stmt.executeUpdate(sql);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -193,5 +193,34 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 		return member;
+	}
+
+	
+	/**
+	 * 관리자 수 조회
+	 * @param cri
+	 * @return
+	 */
+	public int getToatlCnt(Criteria cri) {
+		int totalCnt = 0;
+		String sql= "select count(*) from member "; 
+		
+		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
+			sql += "where " + cri.getSearchField() + " like '%" + cri.getSearchWord() + "%' ";
+		}
+			
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			ResultSet rs = pstmt.executeQuery();
+			
+			rs.next();
+			totalCnt = rs.getInt(1); // 첫번째 컬럼의 값을 반환
+			rs.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("총 게시물의 수를 조회하던 중 예외가 발생하였습니다");
+		}
+		return totalCnt;
 	}
 }

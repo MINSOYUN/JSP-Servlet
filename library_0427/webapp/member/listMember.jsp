@@ -114,8 +114,9 @@
 		<tr>
 			<td colspan="6" class="button-container">
 				<button type="button" onclick="location.href='../loginAdmin2.jsp';">관리자 메뉴 바로가기</button>
-				<c:if test="${sessionScope.adminYn eq 'Y'}">
-				<button onclick="deleteMember()">관리자 삭제</button>
+			<c:if test="${sessionScope.adminYn eq 'Y'}">
+				<button type="button" onclick="location.href='../delete.member';">관리자 삭제</button>
+				<button type="button" onclick="location.href='../write.member';"">관리자 등록</button>
 			</c:if>
 		</td>
 	</tr>

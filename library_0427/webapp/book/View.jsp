@@ -6,76 +6,124 @@
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
+<style>
+    body {
+        margin: 0;
+        padding: 20px;
+    }
+
+    h3 {
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    img {
+        width: 200px;
+        height: auto;
+    }
+    
+    .rental{
+    	border: 1px solid #ccc;
+    	border-radius: 5px;
+		color: #333;
+		background-color: #ffffff00;
+		padding: 10px 10px;
+    }
+
+    button {
+        padding: 10px 30px;
+        font-size: 14px;
+        background-color: #fcbe62;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #f0f0f0;
+    }
+
+</style>
 <script type="text/javascript">
-	function setAction(action){
-		viewForm.action=action;
-	}
+    function setAction(action) {
+        viewForm.action = action;
+    }
 </script>
 </head>
 <body>
-${map.message  }
+${map.message }
 <%@include file="/common/header.jsp" %>
 <h3>도서 상세보기</h3>
 
 <form name="viewForm" method="post">
-대여번호 : <input type="text" name="rentno" value="${book.rentno }">
-도서번호 : <input type="text" name="no" value="${book.no }">
-<table border="1" style="border-collapse: collapse">
-    <colgroup>
-        <col width="30%"/> 
-        <col width="15%"/> <col width="20%"/>
-        <col width="15%"/> <col width="20%"/>
-    </colgroup>
+    <table>
+        <colgroup>
+            <col width="30%" />
+            <col width="15%" />
+            <col width="20%" />
+            <col width="15%" />
+            <col width="20%" />
+        </colgroup>
 
-    <!-- 게시글 정보 -->
-    <tr>
-        <td rowspan="3">
-        	<img alt="${ book.title }이미지" width="200px" src="../images/bookImg/${book.sfile }">
-        </td>
-        <td>도서명</td><td>${ book.title }</td>
-        <td>작가</td> <td>${ book.author }</td>
-    </tr>
-    <tr>
-        <td>대여</td> 
-        
-        	<c:choose>
-        		
-        		<c:when test="${empty book.rentno}">
-	        		<td colspan="3"><button onclick="setAction('./rent.book')">대여하기</button></td>
-	        				
-        		</c:when>
-        		<c:when test="${book.id eq sessionScope.userId }"> 
-        			<td><button onclick="setAction('./return.book')">반납하기</button></td>
-        			<td>대여기간</td> <td>${ book.startDate } ~ ${ book.endDate }</td>
-        		</c:when>
-        		<c:otherwise>
-        			<td>대여중</td>
-        			<td>대여기간</td> <td>${ book.startDate } ~ ${ book.endDate }</td>
-        		</c:otherwise>
-        	</c:choose>
-    </tr>
-    <tr>
-    	<td height="200px">상세설명</td><td colspan="3"></td>
-    </tr>
-    <!-- 하단 메뉴(버튼) -->
-    <tr>
-        <td colspan="5" align="center">
-            <button type="button" onclick="location.href='./edit.book?no=${book.no}';">
-                수정하기
-            </button>
-            <button type="button" onclick="location.href='./delete.book?delNo=${ book.no }';">
-            	삭제하기
-            </button>
-            <button type="button" onclick="location.href='./list.book';">
-                목록 바로가기
-            </button>
-           	<c:if test=""></c:if>
-           	
-            
-            
-        </td>
-    </tr>
+        <!-- 게시글 정보 -->
+        <tr>
+            <td rowspan="3">
+                <img alt="${ book.title }이미지" src="../images/bookImg/${book.sfile }">
+            </td>
+            <td>도서명</td>
+            <td>${ book.title }</td>
+            <td>작가</td>
+            <td>${ book.author }</td>
+        </tr>
+        <tr>
+            <td>대여</td>
+            <c:choose>
+                <c:when test="${empty book.rentno}">
+                    <td colspan="3"><button  class='rental' onclick="setAction('./rent.book')">대여하기</button></td>
+                </c:when>
+                <c:when test="${book.id eq sessionScope.userId }">
+                    <td><button class='rental' onclick="setAction('./return.book')">반납하기</button></td>
+                    <td>대여기간</td>
+                    <td>${ book.startDate } ~ ${ book.endDate }</td>
+                </c:when>
+                <c:otherwise>
+                    <td>대여중</td>
+                    <td>대여기간</td>
+                    <td>${ book.startDate } ~ ${ book.endDate }</td>
+                </c:otherwise>
+            </c:choose>
+        </tr>
+        <tr>
+            <td height="200px">상세설명</td>
+            <td colspan="3"></td>
+        </tr>
+	<!-- 하단 메뉴(버튼) -->
+	    <tr>
+	        <td colspan="5" align="center">
+	            <button type="button" onclick="location.href='./edit.book?no=${book.no}';">
+	                수정하기
+	            </button>
+	            <button type="button" onclick="location.href='./delete.book?delNo=${ book.no }';">
+	            	삭제하기
+	            </button>
+	            <button type="button" onclick="location.href='./list.book';">
+	                목록 바로가기
+	            </button>
+	           	<c:if test=""></c:if>
+	            
+	        </td>
+	    </tr>
 </table>
 </form>
 </body>
-</html>

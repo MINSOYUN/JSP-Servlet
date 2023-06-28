@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	body{
+		background-color: #f2f2f2;
+		display: flex;
+        justify-content: center;
+	}
+	
 	#rightside {
 		width: 300px;
 		background-color: #f2f2f2;
@@ -16,17 +22,12 @@
 	.side1 {
 		margin-top: 50px;
 	}
-
-	h1 {
-		margin-bottom: 20px;
-	}
-
+	
 	.loginbox {
 		margin-bottom: 20px;
 	}
 
-	#login input[type="text"],
-	#login input[type="password"] {
+	#login input[type="text"], #login input[type="password"] {
 		width: 80%;
 		padding: 10px; 
 		margin-bottom: 10px;

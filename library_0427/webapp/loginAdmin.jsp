@@ -74,7 +74,8 @@
 <h3>관리자 메뉴</h3>
 	<ul class="menu">
 		<li><a href="./member/listMember.member">도서등록</a></li>
-		<li> <a href="./book/list.book">도서삭제 -도서 상세보기</a></li>
+		<li> <a href="./book/rent.book">대여 중인 도서</a></li>
+		<li><a href="./book/list.book">도서 목록 바로가기</a></li>
 	</ul>
 		<button class="button" onclick="location.href='login.jsp'">로그아웃</button>
 <% } %>

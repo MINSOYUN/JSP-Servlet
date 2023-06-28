@@ -48,8 +48,20 @@ public class MemberController extends HttpServlet{
 		} else if(uri.indexOf("view")>0) {
 			req.setAttribute("member", ms.selectOne(req.getParameter("id")));
 			System.out.println("member:"+ ms.selectOne(req.getParameter("id")));
-			req.getRequestDispatcher("./View.jsp").forward(req, resp);
+			req.getRequestDispatcher("./ViewMember.jsp").forward(req, resp);
+		
 			
+		// 관리자 삭제
+		} else if(uri.indexOf("delete") > 0) {
+			int res = ms.delete(req.getParameter("delNo"));
+			System.out.println("삭제건: "+res);
+			if(res>0) {
+				JSFunction.alertLocation(resp, "./listMemer.member", res+"건 삭제되었습니다");
+			} else {
+				JSFunction.alertBack(resp, "관리자 정보 삭제에 실패하였습니다");
+			}
+			
+			resp.sendRedirect("./listMember.member");
 		}
 	}
 	
@@ -60,7 +72,7 @@ public class MemberController extends HttpServlet{
 		
 		// 관리자 등록
 		if(uri.indexOf("write") > 0) {
-			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\memberImg";
+			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\memberImg";
 
 			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			

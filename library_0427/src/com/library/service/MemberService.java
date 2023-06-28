@@ -51,15 +51,10 @@ public class MemberService {
 	 * 멤버 삭제
 	 * @param delId
 	 */
-	public void delete(String delId) {
-		int res= dao.delete(delId);
+	public int delete(String delNo) {
+		int res= dao.delete(delNo);
 		
-		if(res>0) {
-			System.out.println(res + "건 삭제 되었습니다.");
-		} else {
-			System.out.println("삭제중 오류가 발생 하였습니다.");
-			System.out.println("관리자에게 문의해주세요.");
-		}
+		return res;
 	}
 	
 	
@@ -85,6 +80,7 @@ public class MemberService {
 	public List<Member> getList(Criteria cri) {
 		List<Member> list = new ArrayList<Member>();
 		list = dao.getList(cri);
+		int totalCnt = dao.getToatlCnt(cri);
 		// 리스트 조회
 		return list;
 	}
