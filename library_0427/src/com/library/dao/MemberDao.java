@@ -291,7 +291,7 @@ public class MemberDao {
 			pstmt.setString(4, member.getInfo());
 			pstmt.setString(5, member.getId());
 			
-			
+			System.out.println("오류:"+member.getInfo());
 			res = pstmt.executeUpdate();
 			System.out.println("res: "+ res);
 		} catch (SQLException e) {

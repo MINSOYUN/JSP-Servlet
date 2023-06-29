@@ -6,35 +6,59 @@
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
-<script type="text/javascript">
-    function validateForm(form) {  // 필수 항목 입력 확인
-        if (form.name.value == "") {
-            alert("작성자를 입력하세요.");
-            form.name.focus();
-            return false;
+<style type="text/css">
+        body {
+            background-color: #F9F9F9;
         }
-        if (form.title.value == "") {
-            alert("제목을 입력하세요.");
-            form.title.focus();
-            return false;
-        }
-        if (form.content.value == "") {
-            alert("내용을 입력하세요.");
-            form.content.focus();
-            return false;
-        }
-        if (form.pass.value == "") {
-            alert("비밀번호를 입력하세요.");
-            form.pass.focus();
-            return false;
-        }
-    }
-</script>
-</head>
-<h3>도서 등록하기</h3>
 
-<form name="writeFrm" method="post"
-      action="../book/write.book" enctype="multipart/form-data" onsubmit="return validateForm(this);">
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table td {
+            padding: 10px;
+        }
+
+        input[type="text"]{
+        	width: 90%;
+        	padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+  		input[type="submit"], input[type="reset"],
+        button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            color: #FFF;
+        }
+
+        button {
+            background-color: #fcbe62;
+        }
+
+        button:hover {
+            background-color: #FF9800;
+        }
+        
+   		 td[colspan="4"] {
+        	text-align: center;
+   		 }
+</style>
+
+</head>
+<body>
+<h3>도서 등록하기</h3>
+<form name="writeFrm" method="post" action="../book/write.book" enctype="multipart/form-data" onsubmit="return validateForm(this);">
 <table border="1" width="90%" style="border-collapse: collapse" height="150px">
     <tr>
         <td>아이디</td>
@@ -78,7 +102,7 @@
         <td colspan="4" align="center">
             <button type="submit">작성 완료</button>
             <button type="reset">RESET</button>
-            <button type="button" onclick="location.href='../mvcboard/list.do';">
+            <button type="button" onclick="location.href='./list.book';">
                 목록 바로가기
             </button>
         </td>

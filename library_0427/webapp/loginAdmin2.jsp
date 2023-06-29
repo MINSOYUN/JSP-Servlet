@@ -71,7 +71,7 @@
 	 Member m = (Member)session.getAttribute("member");
 %>
 	<div class="container">
-		<h2>관리자 메뉴 - 사용자 관리</h2>
+		<h2>관리자 사용자 관리</h2>
 		<ul class="menu">
 			<li><a href="./member/listMember.member">관리자 목록 보기</a></li> 
 			<li><a href="./member/write.member">관리자 등록[바로가기]</a></li> 

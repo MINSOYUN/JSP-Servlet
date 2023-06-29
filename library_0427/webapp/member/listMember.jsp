@@ -11,6 +11,11 @@
 		background-color: #F9F9F9;
 	}
 	
+	
+	h3 {
+        text-align: center;
+    }
+	
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -85,7 +90,7 @@
 <body>
 <%@ include file="../common/header.jsp" %>
 	<h3>관리자목록</h3>
-	총 회원 수 : ${totalCnt } 명
+	<p>총 회원 수 : ${totalCnt } 명</p>
 	<%@ include file = "../common/SearchMember.jsp" %>
 	
 	
@@ -129,7 +134,7 @@
 		</c:if>
 		
 		<tr>
-			<td colspan="6" class="button-container">
+			<td colspan="7" class="button-container">
 				<button type="button" onclick="location.href='../loginAdmin2.jsp';">관리자 메뉴 바로가기</button>
 			<c:if test="${sessionScope.adminYn eq 'Y'}">
 				<button type="button" onclick="location.href='./delete.member';">관리자 삭제</button>

@@ -71,7 +71,7 @@
 	 Member m = (Member)session.getAttribute("member");
 %>
 <div class="container">
-<h3>관리자 메뉴</h3>
+<h3>관리자 도서 관리</h3>
 	<ul class="menu">
 		<li><a href="./book/list.book">도서 목록 바로가기</a></li>
 		<li><a href="./book/write.book">도서등록</a></li>

@@ -7,90 +7,54 @@
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
 <style type="text/css">
-    body {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-    }
-    h3 {
-        text-align: center;
-    }
-    form {
-        margin: 0 auto;
-        width: 90%;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-    th, td {
-        padding: 10px;
-        border: 1px solid #ccc;
-    }
-    input[type="text"], textarea {
-        width: 90%;
-        padding: 5px;
-        box-sizing: border-box;
-    }
-    input[type="file"] {
-        width: 90%;
-        padding: 5px;
-        box-sizing: border-box;
-    }
-    button {
-        padding: 10px 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ccc;
-        cursor: pointer;
-    }
-    button[type="submit"] {
-        background-color: #4CAF50;
-        color: #fff;
-    }
-    button[type="reset"] {
-        background-color: #f44336;
-        color: #fff;
-    }
-    button[type="button"] {
-        background-color: #2196F3;
-        color: #fff;
-    }
-    button[type="submit"],
-    button[type="reset"],
-    button[type="button"] {
-        margin-right: 10px;
-    }
-    button:hover {
-        background-color: #e0e0e0;
-    }
-    td[colspan="4"] {
-        text-align: center;
-    }
+        body {
+            background-color: #F9F9F9;
+        }
+
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table td {
+            padding: 10px;
+        }
+
+        input[type="text"]{
+        	width: 90%;
+        	padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+  		input[type="submit"], input[type="reset"],
+        button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            color: #FFF;
+        }
+
+        button {
+            background-color: #fcbe62;
+        }
+
+        button:hover {
+            background-color: #FF9800;
+        }
+        
+   		 td[colspan="4"] {
+        	text-align: center;
+   		 }
 </style>
-<script type="text/javascript">
-    function validateForm(form) {  // 필수 항목 입력 확인
-        if (form.name.value == "") {
-            alert("작성자를 입력하세요.");
-            form.name.focus();
-            return false;
-        }
-        if (form.title.value == "") {
-            alert("제목을 입력하세요.");
-            form.title.focus();
-            return false;
-        }
-        if (form.content.value == "") {
-            alert("내용을 입력하세요.");
-            form.content.focus();
-            return false;
-        }
-        if (form.pass.value == "") {
-            alert("비밀번호를 입력하세요.");
-            form.pass.focus();
-            return false;
-        }
-    }
-</script>
+
 </head>
 <body>
 <h3>도서 등록하기</h3>
@@ -124,7 +88,7 @@
     </tr>
     <tr>
         <td>책이미지</td>
-        <td colpsan="4">
+        <td  colspan="4">
             <input type="file" name="bookImg" style="width:90%;" />
         </td>
     </tr>

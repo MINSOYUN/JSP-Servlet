@@ -54,7 +54,7 @@
 	
 				<!-- 사용자 -->
 				<c:if test="${sessionScope.adminYn eq 'N'}">
-					<div>로고</div>
+					<div>📔</div>
 					<div>
 						<a href="">도서관리시스템</a>
 						<a href="">마이페이지</a>
