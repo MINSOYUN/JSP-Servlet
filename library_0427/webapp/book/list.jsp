@@ -56,7 +56,7 @@
 	
 	 function deleteBook(){
 	 	// 체크박스가 선택된 요소의 value 값을 , 로 연결
-	 	delNoList = document.querySelectorAll("[name=delno]:checked");
+	 	delNoList = document.querySelectorAll("[name=delNo]:checked");
 	 	
 	 	let delNo = "";
 	 	delNoList.forEach((e) =>{
@@ -93,6 +93,7 @@
 
 <table>
     <tr>
+    	<th></td>
         <th>도서명</th>
         <th>저자</th>
         <th>출판사</th>
@@ -109,6 +110,7 @@
         <c:otherwise>
             <c:forEach items="${map.list}" var="book" step="1">
                 <tr>
+                	<td><input type="checkbox" name="delNo" value="${book.no }"></td>
                     <td><a href="../book/view.book?no=${book.no}">${book.title}</a></td>
                     <td>${book.author}</td>
                     <td>${book.publisher}</td>

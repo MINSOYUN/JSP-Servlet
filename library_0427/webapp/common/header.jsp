@@ -48,8 +48,8 @@
 			<td align="center">
 				<c:if test="${sessionScope.adminYn eq 'Y'}" var="res">
 					<div>📔</div>
-					<div><a href="../loginAdmin.jsp">도서관리</a></div>
-					<div><a href="../loginAdmin2.jsp">사용자관리</a></div>
+					<div><a href="${pageContext.request.contextPath }/loginAdmin.jsp">도서관리</a></div>
+					<div><a href="${pageContext.request.contextPath }/loginAdmin2.jsp">사용자관리</a></div>
 				</c:if>
 	
 				<!-- 사용자 -->
@@ -63,11 +63,11 @@
     
 				<!-- 로그인 x -->
 				<c:if test="${empty sessionScope.userId }" var="res1">
-					<div><a href="./../login.jsp">로그인</a></div>
+					<div><a href="${pageContext.request.contextPath }/login.jsp">로그인</a></div>
 				</c:if>
 				<!-- 로그인 후 -->		
 				<c:if test="${not res1}" var="res1">
-					<div><a href="../login.jsp">로그아웃</a></div>
+					<div><a href="${pageContext.request.contextPath }/login.jsp">로그아웃</a></div>
 				</c:if>
 			</td>
 		</tr>

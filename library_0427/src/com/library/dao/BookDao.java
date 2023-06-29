@@ -101,9 +101,11 @@ public class BookDao {
 		int res = 0;
 		
 		String sql = String.format
-				("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s', '%s', 0, sysdate, '%s', '%s', null)"
-				, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getRentyn(), book.getOfile(), book.getSfile());
+				("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s', '%s', 0, sysdate, '%s', '%s', null, '%s')"
+				, book.getTitle(), book.getAuthor(), book.getPublisher(), book.getRentyn(), book.getOfile(), book.getSfile(), book.getInfo());
 
+		System.out.println("설명:"+book.getInfo());
+		
 		try (Connection conn = DBConnPool.getConnection();
 				Statement stmt = conn.createStatement();	){
 			res = stmt.executeUpdate(sql);
@@ -131,7 +133,7 @@ public class BookDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("결과:"+res);
 		return res;
 	}
 
@@ -175,7 +177,7 @@ public class BookDao {
 		String sql = " select "
 				  + " b.no, b.title, d.대여여부, b.author, b.publisher, b.visitcount, b.postdate, d.아이디"
 				  + " , to_char(대여일,'yy/mm/dd') 대여일, to_char(반납가능일,'yy/mm/dd') 반납가능일" 
-				  + " , 반납일, sfile, ofile, d.대여번호"
+				  + " , 반납일, sfile, ofile, d.대여번호, b.info"
 				  + " from book b, 대여 d where b.rentno = d.대여번호(+) and b.no=?";
 		
 		System.out.println("sql:"+sql);
@@ -199,6 +201,7 @@ public class BookDao {
 				book.setSfile(rs.getString(12));
 				book.setOfile(rs.getString(13));
 				book.setRentno(rs.getString(14));
+				book.setInfo(rs.getString(15));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -253,20 +256,15 @@ public class BookDao {
 	
 	public int updateBook(Book book) {
 		int res = 0;
-		String sql = "update book set title=?, author=?, publisher=? where no=?";
+		String sql = "update book set title=?, author=?, publisher=?, info=? where no=?";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
 			pstmt.setString(1, book.getTitle());
 			pstmt.setString(2, book.getAuthor());
 			pstmt.setString(3, book.getPublisher());
-			pstmt.setString(4, book.getNo());
-			
-			System.out.println("title:"+book.getTitle());
-			System.out.println("getAuthor:"+book.getAuthor());
-			System.out.println("getPublisher:"+book.getPublisher());
-			System.out.println("getNo:"+book.getNo());
-			
+			pstmt.setString(4, book.getInfo());
+			pstmt.setString(5, book.getNo());
 			
 			res = pstmt.executeUpdate();
 			System.out.println("res: "+ res);
@@ -352,7 +350,7 @@ public class BookDao {
 		int res = 0;
 		String sql1 = "select rentno from book where rentno is not null";
 		String sql2 = "update book set rentYN = 'N', rentno='' where rentno = ? and (rentno is not null)";
-		String sql3 = "update 대여 set 대여여부='N', 반납일=sysdate where 대여번호=?"; 
+		String sql3 = "update 대여 set 대여여부='N', 반납일 = sysdate where 대여번호=?"; 
 		
 		try (Connection conn = DBConnPool.getConnection();){
 			conn.setAutoCommit(false);

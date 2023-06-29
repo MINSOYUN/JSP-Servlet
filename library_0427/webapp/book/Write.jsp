@@ -64,10 +64,16 @@
     </tr>
     <tr>
         <td>책이미지</td>
-        <td>
+        <td colpsan="4">
             <input type="file" name="bookImg" style="width:90%;" />
         </td>
     </tr>
+    <tr>
+	     <td>상세설명</td>
+	     <td colspan="4">
+		      <textarea name="info" id="" cols="80" rows="5" ></textarea>
+		  </td>
+   </tr>
     <tr>
         <td colspan="4" align="center">
             <button type="submit">작성 완료</button>

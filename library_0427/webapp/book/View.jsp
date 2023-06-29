@@ -62,9 +62,10 @@
 </script>
 </head>
 <body>
-${map.message }
 <%@include file="/common/header.jsp" %>
 <h3>도서 상세보기</h3>
+도서번호 : <input type="text" name="no" value="${book.no }">
+대여번호 : <input type="text" name="rentno" value="${book.rentno }">
 
 <form name="viewForm" method="post">
     <table>
@@ -90,10 +91,10 @@ ${map.message }
             <td>대여</td>
             <c:choose>
                 <c:when test="${empty book.rentno}">
-                    <td colspan="3"><button  class='rental' onclick="setAction('./rent.book')">대여하기</button></td>
+                    <td colspan="3"><button  class='rental' onclick="setAction('./rent.book?no=${book.no}')">대여하기</button></td>
                 </c:when>
                 <c:when test="${book.id eq sessionScope.userId }">
-                    <td><button class='rental' onclick="setAction('./return.book')">반납하기</button></td>
+                    <td><button class='rental' onclick="setAction('./return.book?no=${book.no}')">반납하기</button></td>
                     <td>대여기간</td>
                     <td>${ book.startDate } ~ ${ book.endDate }</td>
                 </c:when>
@@ -105,9 +106,11 @@ ${map.message }
             </c:choose>
         </tr>
         <tr>
-            <td height="200px">상세설명</td>
-            <td colspan="3"></td>
-        </tr>
+	         <td>상세설명</td>
+	     	 <td colspan="4">
+		            <textarea name="info" id="" cols="50" rows="10" readonly>${ book.info }</textarea>
+		     </td>
+   		</tr>
 	<!-- 하단 메뉴(버튼) -->
 	    <tr>
 	        <td colspan="5" align="center">

@@ -18,10 +18,11 @@ public class Book {
 	
 	private String visitcount;
 	private String postdate;
+	private String info;
 	
 	
 	// 도서를 추가할 경우 도서명과 작가명만 알고 있으면 생성 가능
-	public Book(String title, String author, String publisher, String ofile, String sfile) {
+	public Book(String title, String author, String publisher, String ofile, String sfile, String info) {
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
@@ -29,12 +30,15 @@ public class Book {
 		this.rentyn = "N";
 		this.ofile = ofile;
 		this.sfile = sfile;
+		this.info = info;
+		
 	}
 	
-	public Book(String title, String author, String publisher) {
+	public Book(String title, String author, String publisher, String info) {
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
+		this.info = info;
 		// 신규도서이므로 N
 		this.rentyn = "N";
 	}
@@ -170,6 +174,14 @@ public class Book {
 
 	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	
 	

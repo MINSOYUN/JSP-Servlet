@@ -77,6 +77,8 @@ public class BookService {
 	public int returnBook(String no, String rentno) {
 		int res = 0;
 		res = dao.update(no, rentno);
+		System.out.println("no:"+no);
+		System.out.println("rentno:"+rentno);
 		return res;
 	}
 

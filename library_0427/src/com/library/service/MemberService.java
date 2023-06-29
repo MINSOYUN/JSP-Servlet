@@ -34,7 +34,7 @@ public class MemberService {
 	
 	
 	/**
-	 * 멤버추가
+	 * 회원 추가
 	 * @param id
 	 * @param pw
 	 * @param name
@@ -48,7 +48,7 @@ public class MemberService {
 	
 	
 	/**
-	 * 멤버 삭제
+	 * 회원 삭제
 	 * @param delId
 	 */
 	public int delete(String delNo) {
@@ -73,22 +73,50 @@ public class MemberService {
 
 	
 	/**
-	 * 멤버 조회
+	 * 회원 조회
 	 * @param cri
 	 * @return
 	 */
 	public List<Member> getList(Criteria cri) {
 		List<Member> list = new ArrayList<Member>();
 		list = dao.getList(cri);
-		int totalCnt = dao.getToatlCnt(cri);
 		// 리스트 조회
 		return list;
 	}
+	
+	
+	/**
+	 * 총 회원 수
+	 * @param cri
+	 * @return
+	 */
+	public int getToatlCnt(Criteria cri) {
+		int totalCnt = dao.getToatlCnt(cri);
+		return totalCnt;
+	}
 
-
+	
+	
+	/**
+	 * 회원 상세보기
+	 * @param id
+	 * @return
+	 */
 	public Member selectOne(String id) {
 		Member member = dao.selectOne(id);
 		return member;
+	}
+
+	
+	
+	/**
+	 * 회원 정보 수정
+	 * @param member
+	 * @return
+	 */
+	public int updateMember(Member member) {
+		int res = dao.updateMember(member);
+		return res;
 	}
 }
 

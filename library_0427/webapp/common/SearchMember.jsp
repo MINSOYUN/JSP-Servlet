@@ -19,7 +19,7 @@
 						<option value="id" ${param.searchField eq "id" ? "selected" : ""}>id</option>
 						<option value= "name" ${param.searchField eq "name" ? "selected" : ""}>이름</option>
 				</select>
-					<input type="text" name="searchWord"/>
+					<input type="text" name="searchWord" value="${param.searchWord }"/>
 					<input type="submit" value="검색하기" />
 				</td>
 			</tr>

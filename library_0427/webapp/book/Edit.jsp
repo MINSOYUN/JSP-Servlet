@@ -8,26 +8,53 @@
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
-<script type="text/javascript">
-    function validateForm(form) {
-        if (form.name.value == "") {
-            alert("작성자를 입력하세요.");
-            form.name.focus();
-            return false;
+    <style>
+        body {
+            background-color: #F9F9F9;
         }
-        if (form.title.value == "") {
-            alert("제목을 입력하세요.");
-            form.title.focus();
-            return false;
+
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        if (form.content.value == "") {
-            alert("내용을 입력하세요.");
-            form.content.focus();
-            return false;
+
+        table td {
+            padding: 10px;
         }
-    }
-</script>
+
+        input[type="text"], textarea{
+        	width: 90%;
+        	padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"],
+        input[type="reset"],
+        button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            color: #FFF;
+        }
+
+        button {
+            background-color: #fcbe62;
+        }
+
+        button:hover {
+            background-color: #FF9800;
+        }
+    </style>
 </head>
+<body>
 <h2>도서 정보 수정하기</h3>
 <form name="writeFrm" method="post" action="../book/edit.book" onsubmit="return validateForm(this);">
 <input type="hidden" name="no" value="${ book.no }"/>
@@ -35,23 +62,30 @@
     <tr>
         <td>도서명</td>
         <td>
-            <input type="text" name="title" style="width:90%; height:80%;" value="${ book.title }" />
+            <input type="text" name="title" value="${ book.title }" />
         </td>
          <td>저자</td>
         <td>
-            <input type="text" name="author" style="width:90%; height:80%;" value="${ book.author }" />
+            <input type="text" name="author" value="${ book.author }" />
         </td>
     </tr>
     <tr>
         <td>출판사</td>
         <td>
-            <input type="text" name="publisher" style="width:90%; height:80%;" value="${ book.publisher }" />
+            <input type="text" name="publisher" value="${ book.publisher }" />
         </td>
         <td>대여여부</td>
         <td>
-            <input type="text" name="rentyn" style="width:90%; height:80%;" value="${ book.rentyn }" />
+            <input type="text" name="rentyn" value="${ book.rentyn }" />
         </td>
     </tr>
+        <tr>
+	    <td>상세설명</td>
+	    <td colspan="4">
+		      <textarea name="info" id="" cols="70" rows="10" >${ book.info }</textarea>
+		 </td>
+   		</tr>
+    <tr>
     <tr>
         <td colspan="4" align="center">
             <button type="submit">작성 완료</button>
@@ -63,5 +97,3 @@
     </tr>
 </table>    
 </form>
-</body>
-</html>

@@ -95,6 +95,12 @@
 			            <input type="file" name="memberImg" style="width:90%;" />
 			     </td>
    			</tr>
+			 <tr>
+		         <td>자기소개</td>
+		     	 <td colspan="4">
+		             <textarea name="info" id="" cols="100" rows="10" required></textarea>
+		     	</td>
+   			</tr>
 		    <tr>
 		        <td colspan="4" align="center">
 		            <button type="submit">작성 완료</button>

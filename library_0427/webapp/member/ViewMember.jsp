@@ -52,8 +52,9 @@
     </style>
 </head>
 <body>
-    <h3>관리자 상세보기</h3>
-
+    <h3>회원 상세보기</h3>
+	회원아이디 : <input type="text" name="no" value="${member.id }">
+	
     <form name="writeFrm" method="post" action="../member/write.member" enctype="multipart/form-data"
         onsubmit="return validateForm(this);">
         <table border="1" height="200">
@@ -70,7 +71,7 @@
             <tr>
                 <td>이름</td>
                 <td colspan="3">
-                   { member.name }
+                   ${ member.name }
                 </td>
             </tr>
             <tr>
@@ -92,7 +93,7 @@
    			 <tr>
 		         <td>자기소개</td>
 		     	 <td colspan="4">
-			             <textarea name="" id="" cols="100" rows="10"></textarea>
+			             <textarea name="" id="" cols="100" rows="10" readonly>${ member.info }</textarea>
 			     </td>
    			</tr>
 		    <tr>
@@ -104,7 +105,7 @@
 		            	삭제하기
 		            </button>
 		            <button type="button" onclick="location.href='./listMember.member';">
-		                목록 바로가기
+		                회원 목록 바로가기
 		            </button>
 		        </td>
 		    </tr>

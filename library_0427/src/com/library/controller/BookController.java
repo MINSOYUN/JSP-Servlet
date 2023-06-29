@@ -105,7 +105,7 @@ public class BookController extends HttpServlet{
 
 			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			
-			Book book = new Book(mr.getParameter("title"), mr.getParameter("author"), mr.getParameter("publisher"));
+			Book book = new Book(mr.getParameter("title"), mr.getParameter("author"), mr.getParameter("publisher"), mr.getParameter("info"));
 				
 				String ofile = mr.getFilesystemName("bookImg");
 				System.out.println("ofile" + ofile);
@@ -181,14 +181,20 @@ public class BookController extends HttpServlet{
 			String author = req.getParameter("author");
 			String publisher = req.getParameter("publisher");
 			String no = req.getParameter("no");
+			String info = req.getParameter("info");
 			
 			Book book = new Book();
 			book.setTitle(title);
 			book.setAuthor(author);
 			book.setPublisher(publisher);
 			book.setNo(no);
+			book.setInfo(info);
+			
+			System.out.println("도서설명:"+info);
 			
 			int res = bs.updateBook(book);
+			
+			System.out.println("book정보:"+book);
 			
 			if(res>0) {
 				JSFunction.alertLocation(resp, "../book/view.book?no="+no ,"도서 목록을 수정하였습니다");

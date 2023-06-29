@@ -60,7 +60,6 @@ public class LoginAction extends HttpServlet {
 			// uri : /library_0427/book/list.book
 			response.sendRedirect("../book/list.book");
 			// request.getRequestDispatcher("../book/list.book").forward(request, response);
-	
 		} else{
 			// 로그인 실패
 			// 로그인 화면으로 이동
