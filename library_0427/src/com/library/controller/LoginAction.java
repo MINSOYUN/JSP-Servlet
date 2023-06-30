@@ -61,6 +61,7 @@ public class LoginAction extends HttpServlet {
 				session.setAttribute("adminYn", "N");
 			}
 			// uri : /library_0427/book/list.book
+			session.setMaxInactiveInterval(60*60) ;   // 1시간
 			response.sendRedirect("../book/list.book");
 			// request.getRequestDispatcher("../book/list.book").forward(request, response);
 		} else{

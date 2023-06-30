@@ -91,6 +91,32 @@ public class BookController extends HttpServlet{
 			String sfile = req.getParameter("sfile");
 			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
 			FileUtil.download(req, resp, saveDirectory, ofile, sfile);
+		
+		
+		// 대여 중 도서
+		} else if(uri.indexOf("renting")>0) {
+			Criteria cri = new Criteria(req.getParameter("searchField"), req.getParameter("searchWord"), req.getParameter("pageNo"));
+			req.setAttribute("map", bs.rentingBook(cri)); 
+			req.getRequestDispatcher("./Renting.jsp").forward(req, resp);
+		
+			
+		// 대여 이력 있는 도서
+		} else if(uri.indexOf("history")>0) {
+			Criteria cri = new Criteria(req.getParameter("searchField"), req.getParameter("searchWord"), req.getParameter("pageNo"));
+			req.setAttribute("map", bs.history(cri)); 
+			req.getRequestDispatcher("./History.jsp").forward(req, resp);
+			
+			// 대여기간 연장
+		} else if(uri.indexOf("extension")>0) {
+			int res = bs.extension(req.getParameter("extension"));
+			
+			if(res>0) {
+				req.setAttribute("message", res+"건 기한 연장되었습니다");
+			} else {
+				req.setAttribute("message", "기한 연장에 실패하였습니다. 관리자에게 문의해주세요");
+			}
+			
+			req.getRequestDispatcher("./Renting.jsp").forward(req, resp);
 		}
 	}
 	
@@ -190,8 +216,6 @@ public class BookController extends HttpServlet{
 			book.setNo(no);
 			book.setInfo(info);
 			
-			System.out.println("도서설명:"+info);
-			
 			int res = bs.updateBook(book);
 			
 			System.out.println("book정보:"+book);
@@ -201,6 +225,12 @@ public class BookController extends HttpServlet{
 			} else {
 				JSFunction.alertBack(resp, "도서 목록 수정에 실패하였습니다");
 			}
+		
+		
+		// 대여 중인 도서
+		} else if(uri.indexOf("renting") > 0) {
+			
+
 		}
 	
 	}

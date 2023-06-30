@@ -76,7 +76,7 @@ public class MemberController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI();
-		
+		System.out.println("uri:"+uri);
 		// 회원 등록
 		if(uri.indexOf("write") > 0) {
 			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\memberImg";
@@ -126,17 +126,10 @@ public class MemberController extends HttpServlet{
 			member.setGrade(grade);
 			member.setInfo(info);
 			
-			System.out.println("id수정:"+id);
-			System.out.println("adminyn수정:"+adminyn);
-			System.out.println("status수정:"+status);
-			System.out.println("grade수정:"+grade);
-			System.out.println("info수정:"+info);
-			System.out.println("member수정:"+member);
 			int res = ms.updateMember(member);
-			System.out.println("수정값:"+res);
 			
 			if(res>0) {
-				JSFunction.alertLocation(resp, "../member/view.member?id="+id ,"회원 정보를 수정하였습니다");
+				JSFunction.alertLocation(resp, "./view.member?id="+id ,"회원 정보를 수정하였습니다");
 			} else {
 				JSFunction.alertBack(resp, "회원 정보 수정에 실패하였습니다");
 			}

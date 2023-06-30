@@ -54,21 +54,19 @@
 		alert(message);
 	}
 	
-	 function deleteBook(){
-	 	// 체크박스가 선택된 요소의 value 값을 , 로 연결
-	 	delNoList = document.querySelectorAll("[name=delNo]:checked");
+	 function extensionBook(){
+	 	extensionList = document.querySelectorAll("[name=extension]:checked");
 	 	
-	 	let delNo = "";
-	 	delNoList.forEach((e) =>{
-	 		delNo += e.value + ',';
+	 	let extension = "";
+	 	extensionList.forEach((e) =>{
+	 		extension += e.value + ',';
 	 	});
 	 	
-	 	delNo = delNo.substr(0, delNo.length-1);
-	 	console.log(delNo);
+	 	extension = extension.substr(0, extension.length-1);
+	 	console.log(extension);
 	 	
-	 	// 삭제 요청
-	 	searchForm.action = "../book/delete.book";
-	 	searchForm.delNo.value=delNo;
+	 	searchForm.action = "../book/extension.book";
+	 	searchForm.delNo.value=extension;
 	 	searchForm.submit();  // 함수 ()
 	 }
 </script>
@@ -77,46 +75,41 @@
 <body>
 <%@ include file="../common/header.jsp" %>
 <div class="info">
-    😄 ${sessionScope.userId} 님 환영합니다 😄
+     😄 관리자 : ${sessionScope.userId} 님 😄
 </div>
-<h3>도서목록</h3>
+<h3>대여 중인 도서</h3>
 <p>총 건수: ${map.totalCnt} 건</p>
 
 <%@ include file="../common/SearchForm.jsp" %>
 
 <div class="button-container">
     <c:if test="${sessionScope.adminYn eq 'Y'}">
-        <button onclick="location.href='../book/write.book'">도서등록</button>
-        <button onclick="deleteBook()">도서삭제</button>
+        <button onclick="extensionBook()">반납 기한 연장하기</button>
     </c:if>
 </div>
 
 <table>
     <tr>
     	<th></td>
+        <th>도서번호</th>
         <th>도서명</th>
         <th>저자</th>
-        <th>출판사</th>
-        <th>대여여부/반납일</th>
-        <th>조회수</th>
-        <th>등록일</th>
+        <th>대여번호</th>
     </tr>
     <c:choose>
         <c:when test="${empty map.list}">
             <tr>
-                <td colspan="8" class="center">등록된 게시물이 없습니다</td>
+                <td colspan="5" class="center">대여중인 도서가 없습니다</td>
             </tr>
         </c:when>
         <c:otherwise>
             <c:forEach items="${map.list}" var="book" step="1">
                 <tr>
-                	<td><input type="checkbox" name="delNo" value="${book.no }"></td>
-                    <td><a href="../book/view.book?no=${book.no}">${book.title}</a></td>
+                	<td><input type="checkbox" name="extension" value="${book.no }"></td>
+                    <td><a href="../book/view.book?no=${book.no}">${book.no}</a></td>
+                    <td>${book.title}</td>
                     <td>${book.author}</td>
-                    <td>${book.publisher}</td>
-                    <td>${book.rentyn}</td>
-                    <td>${book.visitcount}</td>
-                    <td>${book.postdate}</td>
+                    <td>${book.rentno}</td>
                 </tr>
             </c:forEach>
         </c:otherwise>

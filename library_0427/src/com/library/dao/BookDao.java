@@ -67,7 +67,7 @@ public class BookDao {
 	 * 게시글 갯수 조회
 	 * @return
 	 */
-	public int getToatlCnt(Criteria criteria) {
+	public int getTotalCnt(Criteria criteria) {
 		int totalCnt = 0;
 		String sql= "select count(*) from book "; 
 		
@@ -401,6 +401,150 @@ public class BookDao {
 		}
 		
 		return res;
+	}
+	
+	
+	
+	/**
+	 * 대여 중인 도서(리스트) 조회
+	 * @param cri
+	 * @return
+	 */
+	public List<Book> rentingBook(Criteria cri) {
+		List<Book> list = new ArrayList<Book>();
+		String sql = "select * from ( "
+				+ "select t.*, rownum rn from ( "
+				+ " SELECT no, title, author, rentno "
+				+ " FROM book "
+				+ " WHERE rentyn='Y'";
+		
+		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
+			sql += " and" + cri.getSearchField() + " like '%" + cri.getSearchWord()+ "%' ";
+		}
+		
+		sql += " order by book.no desc)t "
+				+ ") where rn between "+ cri.getStartNo() + " and " + cri.getEndNo();
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Book book = new Book();
+				
+				book.setNo(rs.getString(1));
+				book.setTitle(rs.getString(2));
+				book.setAuthor(rs.getString(3));
+				book.setRentno(rs.getString(4));
+				
+				list.add(book);
+			}
+			System.out.println("다오list: "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	
+	/**
+	 * 대여 중인 도서 건수 출력
+	 * @param cri
+	 * @return
+	 */
+	public int getRentingCnt(Criteria cri) {
+		int totalCnt = 0;
+		String sql= "select count(*) from book where rentyn='Y' "; 
+		
+		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
+			sql += "where " + cri.getSearchField() + " like '%" + cri.getSearchWord() + "%' ";
+		}
+			
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			ResultSet rs = pstmt.executeQuery();
+			
+			rs.next();
+			totalCnt = rs.getInt(1); // 첫번째 컬럼의 값을 반환
+			rs.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(" 대여 중인 게시물의 수를 조회 하던 중 예외가 발생하였습니다");
+		}
+		return totalCnt;
+	}
+	
+	
+	/**
+	 * 도서 기한 연장
+	 * @param noStr
+	 * @return
+	 */
+	public int extension(String noStr) {
+		int res = 0;
+		
+		String sql = "UPDATE 대여 SET 반납가능일 = 반납가능일 + 7 "
+				+ " WHERE 대여여부 = 'Y' "
+				+ " AND 대여번호 IN ( "
+				+ "    SELECT rentno "
+				+ "    FROM book "
+				+ "    WHERE 대여여부 = 'Y' "
+				+ " )";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				Statement stmt = conn.createStatement();	){
+			res = stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("결과:"+res);
+		return res;
+	}
+
+
+
+	/**
+	 * 대여 이력이 있는 도서 목록
+	 * @param cri
+	 * @return
+	 */
+	public List<Book> history(Criteria cri) {
+		List<Book> list = new ArrayList<Book>();
+		String sql = "select * from ( "
+				+ "select t.*, rownum rn from ( "
+				+ " SELECT no, title, author, rentno "
+				+ " FROM book "
+				+ " WHERE rentyn='Y'";
+		
+		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
+			sql += " and" + cri.getSearchField() + " like '%" + cri.getSearchWord()+ "%' ";
+		}
+		
+		sql += " order by book.no desc)t "
+				+ ") where rn between "+ cri.getStartNo() + " and " + cri.getEndNo();
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Book book = new Book();
+				
+				book.setNo(rs.getString(1));
+				book.setTitle(rs.getString(2));
+				book.setAuthor(rs.getString(3));
+				book.setRentno(rs.getString(4));
+				
+				list.add(book);
+			}
+			System.out.println("다오list: "+list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	

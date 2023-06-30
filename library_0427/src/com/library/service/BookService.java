@@ -24,7 +24,7 @@ public class BookService {
 		// 리스트 조회
 		List<Book> list = dao.getList(cri);
 		// 총 건수
-		int totalCnt = dao.getToatlCnt(cri);
+		int totalCnt = dao.getTotalCnt(cri);
 		// 페이지 DTO
 		PageDto pageDto = new PageDto(totalCnt, cri);
 		
@@ -119,7 +119,59 @@ public class BookService {
 		}
 		return res;
 	}
+	
+	
+	
+	/**
+	 * 대여 중인 도서 조회
+	 * @param cri
+	 * @return
+	 */
+	public Map<String, Object> rentingBook(Criteria cri){
+		Map<String, Object> map = new HashMap<>();
+		
+		List<Book> list = dao.rentingBook(cri);
+		int totalCnt = dao.getRentingCnt(cri);
+		PageDto pageDto = new PageDto(totalCnt, cri);
+		
+		map.put("list", list);
+		map.put("totalCnt", totalCnt);
+		map.put("pageDto", pageDto);
+		
+		return map;
+	}
 
+
+
+	/**
+	 * 도서 기한 연장
+	 * @param parameter
+	 * @return
+	 */
+	public int extension(String noStr) {
+		int res = dao.extension(noStr);
+		return res;
+	}
+
+
+	
+	/**
+	 * 대여 이력이 있는 도서 목록 조회
+	 * @param cri
+	 * @return
+	 */
+	public Map<String, Object> history(Criteria cri){
+		Map<String, Object> map = new HashMap<>();
+		
+		List<Book> list = dao.history(cri);
+		int totalCnt = dao.getRentingCnt(cri);
+		PageDto pageDto = new PageDto(totalCnt, cri);
+		
+		map.put("list", list);
+		map.put("pageDto", pageDto);
+		
+		return map;
+	}
 
 	
 }

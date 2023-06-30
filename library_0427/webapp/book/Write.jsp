@@ -58,8 +58,8 @@
 </head>
 <body>
 <h3>도서 등록하기</h3>
-<form name="writeFrm" method="post" action="../book/write.book" enctype="multipart/form-data" onsubmit="return validateForm(this);">
-<table border="1" width="90%" style="border-collapse: collapse" height="150px">
+<form name="writeFrm" method="post" action="../book/write.book" enctype="multipart/form-data">
+<table border="1" height="150px">
     <tr>
         <td>아이디</td>
         <td colspan="4">
@@ -69,21 +69,21 @@
     <tr>
         <td>제목</td>
         <td>
-            <input type="text" name="title" style="width:90%;" />
+            <input type="text" name="title" style="width:90%;" required/>
         </td>
         <td>저자명</td>
         <td>
-            <input type="text" name="author" style="width:90%;" />
+            <input type="text" name="author" style="width:90%;" required/>
         </td>
     </tr>
     <tr>
         <td>출판사</td>
         <td>
-            <input type="text" name="publisher" style="width:90%;" />
+            <input type="text" name="publisher" style="width:90%;" required/>
         </td>
         <td>대여여부</td>
         <td>
-            <input type="text" name="rentyn" style="width:90%;" />
+            <input type="text" name="rentyn" style="width:90%;" required/>
         </td>
     </tr>
     <tr>
@@ -95,7 +95,7 @@
     <tr>
 	     <td>상세설명</td>
 	     <td colspan="4">
-		      <textarea name="info" id="" cols="80" rows="5" ></textarea>
+		      <textarea name="info" id="" cols="80" rows="5" required></textarea>
 		  </td>
    </tr>
     <tr>

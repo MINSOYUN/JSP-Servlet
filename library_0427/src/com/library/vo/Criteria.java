@@ -8,10 +8,10 @@ public class Criteria {
 	
 	// 초기화
 	int pageNo = 1; // 요청한 페이지 번호
-	int amount = 5; // 한 페이지당 보여질 게시물 수
+	int amount = 10; // 한 페이지당 보여질 게시물 수
 	
 	int startNo = 1; 
-	int endNo = 5;
+	int endNo = 10;
 	
 
 	public Criteria(int pageNo) {
@@ -30,8 +30,8 @@ public class Criteria {
 		this.pageNo = pageNo;
 		this.amount = amount;
 	}
-
-
+	
+	
 
 	public Criteria(String searchField, String searchWord, int pageNo) {
 		if(searchWord != null) {

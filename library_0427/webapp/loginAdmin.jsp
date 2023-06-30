@@ -75,7 +75,8 @@
 	<ul class="menu">
 		<li><a href="./book/list.book">도서 목록 바로가기</a></li>
 		<li><a href="./book/write.book">도서등록</a></li>
-		<li> <a href="./book/rent.book">대여 중인 도서</a></li>
+		<li> <a href="./book/history.book">대여 이력이 존재하는 도서</a></li>
+		<li> <a href="./book/renting.book">대여 중인 도서</a></li>
 	</ul>
 		<button class="button" onclick="location.href='login.jsp'">로그아웃</button>
 <% } %>

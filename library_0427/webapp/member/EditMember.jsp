@@ -54,7 +54,7 @@
 <body>
     <h3>회원 수정하기</h3>
 	
-    <form name="writeFrm" method="post" action="./member/edit.member"
+    <form name="writeFrm" method="post" action="./edit.member"
         onsubmit="return validateForm(this);">
 		<input type="hidden" name="id" value="${member.id }">
         <table border="1" height="200">
@@ -100,7 +100,7 @@
         <td colspan="4" align="center">
             <button type="submit">작성 완료</button>
             <button type="reset">RESET</button>
-            <button type="button" onclick="location.href='../member/listMember.member';">
+            <button type="button" onclick="location.href='./listMember.member';">
                 목록 바로가기
             </button>
         </td>
