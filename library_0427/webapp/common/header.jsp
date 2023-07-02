@@ -49,15 +49,15 @@
 				<c:if test="${sessionScope.adminYn eq 'Y'}" var="res">
 					<div>📔</div>
 					<div><a href="${pageContext.request.contextPath }/loginAdmin.jsp">도서관리</a></div>
-					<div><a href="${pageContext.request.contextPath }/loginAdmin2.jsp">사용자관리</a></div>
+					<div><a href="${pageContext.request.contextPath }/loginAdmin2.jsp">회원관리</a></div>
 				</c:if>
 	
 				<!-- 사용자 -->
 				<c:if test="${sessionScope.adminYn eq 'N'}">
 					<div>📔</div>
 					<div>
-						<a href="">도서관리시스템</a>
-						<a href="">마이페이지</a>
+						<a href="${pageContext.request.contextPath }/loginUser.jsp">활동내역</a>
+						<a href="${pageContext.request.contextPath }/loginUser2.jsp">마이페이지</a>
 					</div>
 				</c:if>			
     

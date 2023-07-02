@@ -16,6 +16,12 @@
             border-collapse: collapse;
             margin-bottom: 20px;
         }
+        
+        .required-label {
+	        font-size: 12px;
+	        color: red;
+	        padding-left: 10px;
+   		 }
 
         table td {
             padding: 10px;
@@ -61,39 +67,39 @@
 <form name="writeFrm" method="post" action="../book/write.book" enctype="multipart/form-data">
 <table border="1" height="150px">
     <tr>
-        <td>아이디</td>
+        <td>아이디<span class="required-label">* 필수 입력 사항</span></td>
         <td colspan="4">
             <input type="text" name="id" style="width:90%;" value="${sessionScope.userId }" readonly="readonly" />
         </td>
     </tr>
     <tr>
-        <td>제목</td>
+        <td>제목<span class="required-label">* 필수 입력 사항</span></td>
         <td>
             <input type="text" name="title" style="width:90%;" required/>
         </td>
-        <td>저자명</td>
+        <td>저자명<span class="required-label">* 필수 입력 사항</span></td>
         <td>
             <input type="text" name="author" style="width:90%;" required/>
         </td>
     </tr>
     <tr>
-        <td>출판사</td>
+        <td>출판사<span class="required-label">* 필수 입력 사항</span></td>
         <td>
             <input type="text" name="publisher" style="width:90%;" required/>
         </td>
-        <td>대여여부</td>
+        <td>대여여부<span class="required-label">* 필수 입력 사항</span></td>
         <td>
             <input type="text" name="rentyn" style="width:90%;" required/>
         </td>
     </tr>
     <tr>
-        <td>책이미지</td>
+        <td>도서 이미지<span class="required-label">* 필수 입력 사항</span></td>
         <td colpsan="4">
             <input type="file" name="bookImg" style="width:90%;" />
         </td>
     </tr>
     <tr>
-	     <td>상세설명</td>
+	     <td>상세설명<span class="required-label">* 필수 입력 사항</span></td>
 	     <td colspan="4">
 		      <textarea name="info" id="" cols="80" rows="5" required></textarea>
 		  </td>

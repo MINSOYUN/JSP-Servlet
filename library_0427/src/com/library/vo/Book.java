@@ -69,6 +69,7 @@ public class Book {
 		return getNo()
 				+ " " + getTitle()
 				+ " " + getAuthor()
+				+ " " + getSfile()
 				+ " " + rentYNStr;
 	}
 	

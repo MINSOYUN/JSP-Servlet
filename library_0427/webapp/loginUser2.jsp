@@ -12,7 +12,7 @@
 			text-align: center;
 		}
 
-		h2 {
+		h3 {
 			font-size: 24px;
 			margin-bottom: 20px;
 		}
@@ -43,8 +43,6 @@
 			  background-color: #f0f0f0;
 			}
 
-
-		/* Buttons */
 		.button {
 			display: inline-block;
 			padding: 10px 20px;
@@ -63,29 +61,36 @@
 			font-weight: bold;
 		}
 	</style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 <%@ include file = "/common/header.jsp" %>
 <%
  if(session.getAttribute("member") != null){
 	 Member m = (Member)session.getAttribute("member");
+	 
+	 String id = (String) session.getAttribute("userId");
+	 
 %>
-	<div class="container">
-		<h2>관리자 사용자 관리</h2>
-		<ul class="menu">
-			<li><a href="./member/listMember.member">회원 목록 보기</a></li> 
-			<li><a href="./member/write.member">회원 등록[바로가기]</a></li> 
-			<li><a href="./member/delete.member">회원 삭제</a></li>
-			<li><a href="./book/list.book">회원 관리 창 나가기</a></li>
-			<button class="button" onclick="location.href='logout.jsp'">로그아웃</button>
-		</ul>
+<div class="container">
+<h3>마이페이지</h3>
+	<ul class="menu">
+		<li><a href="./user/">대여 중인 도서 목록 보기</a></li>
+		<li><a href="./user/">장바구니 가기</a></li>
+		<li><a href="./user/">주문 / 배송 목록 조회</a></li>
+		<li> <a href="./user/">문의 내역</a></li>
+		<li><a href="./user/view.user?id=${id }">내 정보 보기</a></li>
+		<li><a href="./book/list.book">마이페이지 나가기</a></li>
+	</ul>
+		<button class="button" onclick="location.href='login.jsp'">로그아웃</button>
 <% } %>
 <%
  if(session.getAttribute("member") == null){
 	 Member m = (Member)session.getAttribute("member");
 %>
-			<button class="button" onclick="location.href='login.jsp'">로그인</button>
+		<button class="button" onclick="location.href='login.jsp'">로그인</button>
 <% } %>
-	</div>
+</div>
 </body>
 </html>

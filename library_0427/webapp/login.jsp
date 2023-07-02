@@ -42,12 +42,14 @@
 
 	#info input[type="checkbox"] {
 		margin-right: 5px;
+		
 	}
 
 	#info a {
 		margin-right: 10px;
 		text-decoration: none;
 		color: #777;
+		margin:10px;
 	}
 
 </style>

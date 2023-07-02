@@ -15,6 +15,12 @@
             border-collapse: collapse;
             margin-bottom: 20px;
         }
+        
+        .required-label {
+	        font-size: 12px;
+	        color: red;
+	        padding-left: 10px;
+   		 }
 
         table td {
             padding: 10px;
@@ -75,17 +81,17 @@
                 </td>
             </tr>
             <tr>
-                <td>관리자여부</td>
+                <td>관리자여부<span class="required-label">* 필수 입력 사항</span></td>
                 <td colspan="3">
                    <input type="text" name="adminyn" style="width:90%; height:80%;" value="${ member.adminyn }" />
                 </td>
             </tr>
             <tr>
-                <td>상태</td>
+                <td>상태<span class="required-label">* 필수 입력 사항</span></td>
                 <td>
                     <input type="text" name="status" style="width:90%; height:80%;" value="${ member.status }" />
                 </td>
-                <td>등급</td>
+                <td>등급<span class="required-label">* 필수 입력 사항</span></td>
         		<td>
           			 <input type="text" name="grade" style="width:90%; height:80%;" value="${ member.grade }" />
        			</td>
@@ -93,12 +99,12 @@
    			 <tr>
 		         <td>자기소개</td>
 		     	 <td colspan="4">
-			             <textarea name="info" cols="100" rows="10">${ member.info }</textarea>
+			             <textarea name="info" cols="100" rows="10" readonly>${ member.info }</textarea>
 			     </td>
    			</tr>
 		   <tr>
         <td colspan="4" align="center">
-            <button type="submit">작성 완료</button>
+            <button type="submit">수정 완료</button>
             <button type="reset">RESET</button>
             <button type="button" onclick="location.href='./listMember.member';">
                 목록 바로가기

@@ -180,7 +180,6 @@ public class BookDao {
 				  + " , 반납일, sfile, ofile, d.대여번호, b.info"
 				  + " from book b, 대여 d where b.rentno = d.대여번호(+) and b.no=?";
 		
-		System.out.println("sql:"+sql);
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
 			pstmt.setString(1, no);
@@ -256,7 +255,7 @@ public class BookDao {
 	
 	public int updateBook(Book book) {
 		int res = 0;
-		String sql = "update book set title=?, author=?, publisher=?, info=? where no=?";
+		String sql = "update book set title=?, author=?, publisher=?, info=?, sfile=? where no=?";
 		
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -264,9 +263,11 @@ public class BookDao {
 			pstmt.setString(2, book.getAuthor());
 			pstmt.setString(3, book.getPublisher());
 			pstmt.setString(4, book.getInfo());
-			pstmt.setString(5, book.getNo());
+			pstmt.setString(5, book.getSfile());
+			pstmt.setString(6, book.getNo());
 			
 			res = pstmt.executeUpdate();
+			System.out.println("book:"+book);
 			System.out.println("res: "+ res);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -416,7 +417,7 @@ public class BookDao {
 				+ "select t.*, rownum rn from ( "
 				+ " SELECT no, title, author, rentno "
 				+ " FROM book "
-				+ " WHERE rentyn='Y'";
+				+ " WHERE rentyn='Y' and rentno is not null";
 		
 		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
 			sql += " and" + cri.getSearchField() + " like '%" + cri.getSearchWord()+ "%' ";
@@ -512,17 +513,17 @@ public class BookDao {
 	 */
 	public List<Book> history(Criteria cri) {
 		List<Book> list = new ArrayList<Book>();
-		String sql = "select * from ( "
-				+ "select t.*, rownum rn from ( "
-				+ " SELECT no, title, author, rentno "
-				+ " FROM book "
-				+ " WHERE rentyn='Y'";
+		String sql = "select * from (  "
+				+ " select t.*, rownum rn from (  "
+				+ " select distinct no, title, author, visitcount "
+				+ " from book, 대여 "
+				+ " where book.no = 대여.도서번호 and 대여.대여번호 is not null";
 		
 		if(cri.getSearchWord() != null && !"".equals(cri.getSearchWord())) {
 			sql += " and" + cri.getSearchField() + " like '%" + cri.getSearchWord()+ "%' ";
 		}
 		
-		sql += " order by book.no desc)t "
+		sql += " order by visitcount )t "
 				+ ") where rn between "+ cri.getStartNo() + " and " + cri.getEndNo();
 		
 		try (Connection conn = DBConnPool.getConnection();
@@ -535,17 +536,18 @@ public class BookDao {
 				book.setNo(rs.getString(1));
 				book.setTitle(rs.getString(2));
 				book.setAuthor(rs.getString(3));
-				book.setRentno(rs.getString(4));
+				book.setVisitcount(rs.getString(4));
 				
 				list.add(book);
 			}
-			System.out.println("다오list: "+list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
 	}
+	
+	
 
 	
 	

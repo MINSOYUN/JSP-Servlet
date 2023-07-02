@@ -15,18 +15,12 @@
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        
-        .required-label {
-	        font-size: 12px;
-	        color: red;
-	        padding-left: 10px;
-   		 }
 
         table td {
             padding: 10px;
         }
 
-        input[type="text"]{
+        input[type="text"], textarea{
         	width: 90%;
         	padding: 5px;
             border: 1px solid #ccc;
@@ -58,61 +52,60 @@
     </style>
 </head>
 <body>
-    <h3>관리자 등록하기</h3>
-
+    <h3>회원 상세보기</h3>
+	회원아이디 : <input type="text" name="no" value="${member.id }">
+	
     <form name="writeFrm" method="post" action="../member/write.member" enctype="multipart/form-data"
         onsubmit="return validateForm(this);">
         <table border="1" height="200">
             <tr>
-                <td>아이디<span class="required-label">* 필수 입력 사항</span></td>
+                <td>아이디</td>
                 <td>
-                    <input type="text" name="id" placeholder="아이디를 입력하세요." required>
+               		${ member.id }
                 </td>
-                <td>비밀번호<span class="required-label">* 필수 입력 사항</span></td>
+                <td>비밀번호</td>
                 <td>
-                    <input type="text" name="pw" placeholder="비밀번호를 입력하세요." required>
+					${ member.pw }
                 </td>
             </tr>
             <tr>
-                <td>이름<span class="required-label">* 필수 입력 사항</span></td>
+                <td>이름</td>
                 <td colspan="3">
-                    <input type="text" name="name" placeholder="이름(실명)을 입력하세요." required>
+                   ${ member.name }
                 </td>
             </tr>
             <tr>
-                <td>관리자여부<span class="required-label">* 필수 입력 사항</span></td>
+                <td>관리자여부</td>
                 <td colspan="3">
-                    <input type="text" name="adminyn" placeholder="관리자일 경우 'Y', 아니면 'N'" required>
+                   ${ member.adminyn }
                 </td>
             </tr>
             <tr>
                 <td>상태</td>
                 <td>
-                    <input type="text" name="status">
+                    ${ member.status }
                 </td>
-                <td>등급( A ~ D 등급)</td>
+                <td>등급</td>
         		<td>
-          			  <input type="text" name="grade" style="width:90%;" />
+          			 ${ member.grade }
        			</td>
        		</tr>
    			 <tr>
-		         <td>사진 첨부</td>
+		         <td>자기소개</td>
 		     	 <td colspan="4">
-			            <input type="file" name="memberImg" style="width:90%;" />
+			             <textarea name="" id="" cols="100" rows="10" readonly>${ member.info }</textarea>
 			     </td>
-   			</tr>
-			 <tr>
-		         <td>자기소개<span class="required-label">* 필수 입력 사항</span></td>
-		     	 <td colspan="4">
-		             <textarea name="info" id="" cols="100" rows="10" required></textarea>
-		     	</td>
    			</tr>
 		    <tr>
 		        <td colspan="4" align="center">
-		            <button type="submit">작성 완료</button>
-		            <button type="reset">RESET</button>
-		            <button type="button" onclick="location.href='./listMember.member';">
-		               관리자 목록 바로가기
+		            <button type="button" onclick="location.href='./edit.user?id=${member.id}';">
+	                수정하기
+		            </button>
+		            <button type="button" onclick="location.href='../loginUser2.jsp';">
+		            	뒤로가기
+		            </button>
+		            <button type="button" onclick="location.href='../book/list.book';">
+		                도서목록 바로가기
 		            </button>
 		        </td>
 		    </tr>

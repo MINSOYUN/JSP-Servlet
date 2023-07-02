@@ -89,7 +89,7 @@ public class BookController extends HttpServlet{
 		} else if(uri.indexOf("download")>0) {
 			String ofile = req.getParameter("ofile");
 			String sfile = req.getParameter("sfile");
-			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
 			FileUtil.download(req, resp, saveDirectory, ofile, sfile);
 		
 		
@@ -127,7 +127,7 @@ public class BookController extends HttpServlet{
 		
 		// 도서 등록
 		if(uri.indexOf("write") > 0) {
-			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
 
 			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			
@@ -203,18 +203,25 @@ public class BookController extends HttpServlet{
 
 		// 수정
 		} else if(uri.indexOf("edit") > 0) {
-			String title = req.getParameter("title");
-			String author = req.getParameter("author");
-			String publisher = req.getParameter("publisher");
-			String no = req.getParameter("no");
-			String info = req.getParameter("info");
+			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+
+			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			
-			Book book = new Book();
-			book.setTitle(title);
-			book.setAuthor(author);
-			book.setPublisher(publisher);
+			Book book = new Book(mr.getParameter("title"), mr.getParameter("author"), mr.getParameter("publisher"), mr.getParameter("info"));
+			String no = mr.getParameter("no");
 			book.setNo(no);
-			book.setInfo(info);
+				
+			String ofile = mr.getFilesystemName("bookImg");
+			System.out.println("ofile: " + ofile);
+			
+			if(ofile != null && !"".equals(ofile)) {
+				String sfile = FileUtil.fileNameChange(saveDirectory, ofile);	
+				
+				// 경로 포함되어 있지 않은 파일명 저장
+				book.setOfile(ofile);
+				book.setSfile(sfile);
+			}
+				
 			
 			int res = bs.updateBook(book);
 			

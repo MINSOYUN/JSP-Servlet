@@ -44,7 +44,6 @@
 
     .button-container {
         margin: 10px;
-        padding: 10px 20px;
     }
 </style>
 <script type="text/javascript">
@@ -56,7 +55,7 @@
 	
 	 function deleteBook(){
 	 	// 체크박스가 선택된 요소의 value 값을 , 로 연결
-	 	delNoList = document.querySelectorAll("[name=delNo]:checked");
+	 	delNoList = document.querySelectorAll("[name=check]:checked");
 	 	
 	 	let delNo = "";
 	 	delNoList.forEach((e) =>{
@@ -71,6 +70,42 @@
 	 	searchForm.delNo.value=delNo;
 	 	searchForm.submit();  // 함수 ()
 	 }
+	 
+	 
+	 // 장바구니
+	 function basketBook(){
+		 	basketList = document.querySelectorAll("[name=check]:checked");
+		 	
+		 	let basket = "";
+		 	basketList.forEach((e) =>{
+		 		basket += e.value + ',';
+		 	});
+		 	
+		 	basket = basket.substr(0, basket.length-1);
+		 	console.log(basket);
+		 	
+		 	searchForm.action = "../user/basket.user";
+		 	searchForm.basket.value=basket;
+		 	searchForm.submit();  
+		 }
+	 
+	 
+	 // 구매
+	 function purchaseBook(){
+		 	purchaseList = document.querySelectorAll("[name=check]:checked");
+		 	
+		 	let purchase = "";
+		 	purchaseList.forEach((e) =>{
+		 		purchase += e.value + ',';
+		 	});
+		 	
+		 	purchase = delNo.substr(0, purchase.length-1);
+		 	console.log(purchase);
+		 	
+		 	searchForm.action = "../user/purchase.user";
+		 	searchForm.purchase.value=purchase;
+		 	searchForm.submit();  // 함수 ()
+		 }
 </script>
 
 </head>
@@ -88,6 +123,12 @@
     <c:if test="${sessionScope.adminYn eq 'Y'}">
         <button onclick="location.href='../book/write.book'">도서등록</button>
         <button onclick="deleteBook()">도서삭제</button>
+    </c:if>
+</div>
+<div class="button-container">
+    <c:if test="${sessionScope.adminYn eq 'N'}">
+        <button onclick="basketBook()">장바구니 담기</button>
+        <button onclick="purchaseBook()">바로 구매하기</button>
     </c:if>
 </div>
 
@@ -110,7 +151,7 @@
         <c:otherwise>
             <c:forEach items="${map.list}" var="book" step="1">
                 <tr>
-                	<td><input type="checkbox" name="delNo" value="${book.no }"></td>
+                	<td><input type="checkbox" name="check" value="${book.no }"></td>
                     <td><a href="../book/view.book?no=${book.no}">${book.title}</a></td>
                     <td>${book.author}</td>
                     <td>${book.publisher}</td>
