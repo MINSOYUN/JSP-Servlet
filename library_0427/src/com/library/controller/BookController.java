@@ -89,7 +89,7 @@ public class BookController extends HttpServlet{
 		} else if(uri.indexOf("download")>0) {
 			String ofile = req.getParameter("ofile");
 			String sfile = req.getParameter("sfile");
-			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
 			FileUtil.download(req, resp, saveDirectory, ofile, sfile);
 		
 		
@@ -127,7 +127,7 @@ public class BookController extends HttpServlet{
 		
 		// 도서 등록
 		if(uri.indexOf("write") > 0) {
-			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
 
 			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			
@@ -203,7 +203,7 @@ public class BookController extends HttpServlet{
 
 		// 수정
 		} else if(uri.indexOf("edit") > 0) {
-			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
+			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\bookImg";
 
 			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			

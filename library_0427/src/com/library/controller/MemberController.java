@@ -79,7 +79,7 @@ public class MemberController extends HttpServlet{
 		System.out.println("uri:"+uri);
 		// 회원 등록
 		if(uri.indexOf("write") > 0) {
-			String saveDirectory = "C:\\Users\\SOYUN\\git\\JSP-Servlet\\library_0427\\webapp\\images\\memberImg";
+			String saveDirectory = "C:\\Users\\user\\git\\JSP-Servlet\\library_0427\\webapp\\images\\memberImg";
 
 			MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
 			String id = mr.getParameter("id");

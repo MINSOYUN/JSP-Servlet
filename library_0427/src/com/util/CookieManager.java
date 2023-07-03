@@ -27,6 +27,8 @@ public class CookieManager {
 	// 쿠키 이름을 받아서 쿠키 값을 반환
 	public static String readCookie(HttpServletRequest request,
 				String cName) {
+		
+		System.out.println("test");
 		String cookieValue = "";
 		
 		Cookie[] cookies = request.getCookies();

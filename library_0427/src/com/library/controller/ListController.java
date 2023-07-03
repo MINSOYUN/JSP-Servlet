@@ -35,7 +35,7 @@ public class ListController extends HttpServlet{
 		// 검색어, 페이지 정보를 담은 객체를 매개변수로 넣어 줍니다
 		List<Book> list = dao.getList(cri);
 		
-		int totalCnt = dao.getToatlCnt(cri);
+		int totalCnt = dao.getTotalCnt(cri);
 		
 		PageDto pageDto = new PageDto(totalCnt, cri);
 		
